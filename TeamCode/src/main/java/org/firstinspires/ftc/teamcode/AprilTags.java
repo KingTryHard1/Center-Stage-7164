@@ -24,6 +24,7 @@ public class AprilTags extends DriveConstance {
     @Override
     public void init() {
         initRobot();
+        initCam();
 
     }
 
@@ -46,8 +47,29 @@ public class AprilTags extends DriveConstance {
             }
         }
 
+        for (AprilTagDetection detection : myAprilTagProcessor.getDetections())  {
 
+            Orientation rot = Orientation.getOrientation(detection.rawPose.R, AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
 
+            // Original source data
+            double poseX = detection.rawPose.x;
+            double poseY = detection.rawPose.y;
+            double poseZ = detection.rawPose.z;
+
+            double poseAX = rot.firstAngle;
+            double poseAY = rot.secondAngle;
+            double poseAZ = rot.thirdAngle;
+
+            telemetry.addData("Apriltag ID: ", detection.id);
+            telemetry.addData("poseX: ", poseX);
+            telemetry.addData("poseY: ", poseY);
+            telemetry.addData("poseZ: ", poseZ);
+
+            telemetry.addData("poseAX: ", poseAX);
+            telemetry.addData("poseAY: ", poseAY);
+            telemetry.addData("poseAZ: ", poseAZ);
+
+        }
     }
 }
 
