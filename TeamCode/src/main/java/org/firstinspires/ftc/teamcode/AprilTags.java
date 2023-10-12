@@ -30,14 +30,13 @@ public class AprilTags extends DriveConstance {
     @Override
     public void loop() {
         List<AprilTagDetection> myAprilTagDetections;  // list of all detections
-        AprilTagDetection myAprilTagDetection;         // current detection in for() loop
         int myAprilTagIdCode;                           // ID code of current detection, in for() loop
 
 // Get a list of AprilTag detections.
         myAprilTagDetections = myAprilTagProcessor.getDetections();
 
 // Cycle through through the list and process each AprilTag.
-        for (myAprilTagDetection : myAprilTagDetections) {
+        for (AprilTagDetection myAprilTagDetection : myAprilTagDetections) {
 
             if (myAprilTagDetection.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
                 myAprilTagIdCode = myAprilTagDetection.id;
