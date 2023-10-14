@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Size;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -8,6 +10,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 abstract class DriveConstance extends OpMode {
+
     AprilTagProcessor myAprilTagProcessor;
     VisionPortal myVisionPortal;
     DcMotorEx frontLeft;
@@ -27,22 +30,22 @@ abstract class DriveConstance extends OpMode {
     }
 
     void initCam(){
-        // Create a VisionPortal, with the specified camera and AprilTag processor, and assign it to a variable.
-        myVisionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam"), myAprilTagProcessor);
 
-        // Create a new AprilTag Processor Builder object.
-        AprilTagProcessor.Builder myAprilTagProcessorBuilder = new AprilTagProcessor.Builder();
+        myAprilTagProcessor = new AprilTagProcessor.Builder()
+                .setDrawTagID(true)
+                .setDrawTagOutline(true)
+                .setDrawAxes(true)
+                .setDrawCubeProjection(true)
+                .build();
 
-// Optional: set other custom features of the AprilTag Processor (4 are shown here).
-        myAprilTagProcessorBuilder.setDrawTagID(true);       // Default: true, for all detections.
-        myAprilTagProcessorBuilder.setDrawTagOutline(true);  // Default: true, when tag size was provided (thus eligible for pose estimation).
-        myAprilTagProcessorBuilder.setDrawAxes(true);        // Default: false.
-        myAprilTagProcessorBuilder.setDrawCubeProjection(true); // Default: false.
-
-// Create an AprilTagProcessor by calling build()
-        myAprilTagProcessor = myAprilTagProcessorBuilder.build();
+        myVisionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam"))
+                .addProcessor(myAprilTagProcessor)
+                .setCameraResolution(new Size(640, 480))
+                .setStreamFormat(VisionPortal.StreamFormat.YUY2)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
+                .build();
 
     }
-
-
 }

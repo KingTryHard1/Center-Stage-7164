@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.annotation.SuppressLint;
+
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import java.util.List;
 
 @TeleOp
 public class AprilTags extends DriveConstance {
@@ -18,48 +15,24 @@ public class AprilTags extends DriveConstance {
 
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void loop() {
-        List<AprilTagDetection> myAprilTagDetections;  // list of all detections
         int myAprilTagIdCode;                           // ID code of current detection, in for() loop
-
-// Get a list of AprilTag detections.
-        myAprilTagDetections = myAprilTagProcessor.getDetections();
-
-// Cycle through through the list and process each AprilTag.
-        for (AprilTagDetection myAprilTagDetection : myAprilTagDetections) {
-
-            if (myAprilTagDetection.metadata != null) {  // This check for non-null Metadata is not needed for reading only ID code.
-                myAprilTagIdCode = myAprilTagDetection.id;
-
-                // Now take action based on this tag's ID code, or store info for later action.
-
-            }
-        }
-
 
         for (AprilTagDetection detection : myAprilTagProcessor.getDetections())  {
 
-            Orientation rot = Orientation.getOrientation(detection.rawPose.R, AxesReference.INTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES);
+            myAprilTagIdCode = detection.id;
 
-            // Original source data
-            double poseX = detection.rawPose.x;
-            double poseY = detection.rawPose.y;
-            double poseZ = detection.rawPose.z;
-
-            double poseAX = rot.firstAngle;
-            double poseAY = rot.secondAngle;
-            double poseAZ = rot.thirdAngle;
-
-            telemetry.addData("Apriltag ID: ", detection.id);
-            telemetry.addData("poseX: ", poseX);
-            telemetry.addData("poseY: ", poseY);
-            telemetry.addData("poseZ: ", poseZ);
-
-            telemetry.addData("poseAX: ", poseAX);
-            telemetry.addData("poseAY: ", poseAY);
-            telemetry.addData("poseAZ: ", poseAZ);
-
+            if (detection.metadata != null) {
+                telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
+                telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
+                telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+            } else {
+                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
         }
     }
 }
