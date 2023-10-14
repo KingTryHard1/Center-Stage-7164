@@ -1,24 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.util.Size;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp
-
 public class AprilTags extends DriveConstance {
 
     @Override
@@ -46,6 +36,7 @@ public class AprilTags extends DriveConstance {
 
             }
         }
+
 
         for (AprilTagDetection detection : myAprilTagProcessor.getDetections())  {
 
