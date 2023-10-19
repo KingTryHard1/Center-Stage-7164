@@ -15,7 +15,6 @@ public class AprilTags extends DriveConstance {
 
     }
 
-    @SuppressLint("DefaultLocale")
     @Override
     public void loop() {
         int myAprilTagIdCode;                           // ID code of current detection, in for() loop
@@ -33,6 +32,20 @@ public class AprilTags extends DriveConstance {
                 telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
+            double poseY = detection.ftcPose.y;
+            moveForward(poseY);
+        }
+    }
+
+    void moveForward(double current){
+        double throttle = .5;
+
+        while (5.0 >= current){
+            frontLeft.setPower(throttle);
+            frontRight.setPower(throttle);
+            backLeft.setPower(throttle);
+            backRight.setPower(throttle);
+
         }
     }
 }
