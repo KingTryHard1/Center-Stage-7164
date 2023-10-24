@@ -17,12 +17,15 @@ abstract class DriveConstance extends OpMode {
     DcMotorEx frontRight;
     DcMotorEx backLeft;
     DcMotorEx backRight;
+    DcMotorEx crane;
 
     void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
+
+        crane = hardwareMap.get(DcMotorEx.class, "crane");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
