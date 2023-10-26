@@ -3,8 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -18,6 +21,7 @@ abstract class DriveConstance extends OpMode {
     DcMotorEx backLeft;
     DcMotorEx backRight;
     DcMotorEx crane;
+    CRServo lefts;
 
     void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -26,6 +30,7 @@ abstract class DriveConstance extends OpMode {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
+        lefts = hardwareMap.get(CRServo.class, "Lefts");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);

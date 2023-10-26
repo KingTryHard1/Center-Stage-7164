@@ -21,6 +21,8 @@ public class SafeHallow extends DriveConstance{
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
         double cranepower = gamepad1.right_stick_y;
+        double grab = gamepad1.left_trigger;
+        double release = gamepad1.right_trigger;
 
         frontLeft.setPower(throttle);
         frontRight.setPower(throttle);
@@ -38,6 +40,13 @@ public class SafeHallow extends DriveConstance{
         backRight.setPower(turn);
 
         crane.setPower(cranepower);
+
+        if (grab>release)
+            lefts.setPower(grab);
+        else if (release>grab)
+            lefts.setPower(-release);
+        else if (release==grab)
+            lefts.setPower(0);
 
     }
 }

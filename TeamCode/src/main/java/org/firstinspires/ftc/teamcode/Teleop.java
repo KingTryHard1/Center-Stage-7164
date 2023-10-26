@@ -49,10 +49,5 @@ public class Teleop extends DriveConstance{
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }
-
-
-
-
-
     }
 }
