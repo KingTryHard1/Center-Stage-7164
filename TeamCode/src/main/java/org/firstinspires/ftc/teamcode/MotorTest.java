@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @TeleOp
 public class MotorTest extends OpMode {
-
     DcMotorEx motor;
     @Override
     public void init() {
