@@ -22,6 +22,10 @@ public class Teleop extends DriveConstance{
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
+        double cranepower = gamepad1.right_stick_y;
+        boolean liftUp = gamepad1.dpad_up;
+        boolean liftDown = gamepad1.dpad_down;
+
         frontLeft.setPower(throttle);
         frontRight.setPower(throttle);
         backLeft.setPower(throttle);
@@ -37,7 +41,16 @@ public class Teleop extends DriveConstance{
         backLeft.setPower(-turn);
         backRight.setPower(turn);
 
-        for (AprilTagDetection detection : myAprilTagProcessor.getDetections())  {
+        crane.setPower(cranepower);
+
+        if (liftUp)
+            lift.setPower(.7);
+        if (liftDown)
+            lift.setPower(-.3);
+        else
+            lift.setPower(0);
+
+        /*for (AprilTagDetection detection : myAprilTagProcessor.getDetections())  {
 
             if (detection.metadata != null) {
                 telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
@@ -48,6 +61,10 @@ public class Teleop extends DriveConstance{
                 telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
                 telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
+
+
         }
+
+         */
     }
 }
