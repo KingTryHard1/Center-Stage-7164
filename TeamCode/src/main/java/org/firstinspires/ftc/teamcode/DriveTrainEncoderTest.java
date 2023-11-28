@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+
+@TeleOp
 public class DriveTrainEncoderTest extends DriveConstance{
     @Override
     public void init() {
         initRobot();
 
-        frontLeft.setMotorDisable();
-        backLeft.setMotorDisable();
-        frontRight.setMotorDisable();
-        backLeft.setMotorDisable();
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
