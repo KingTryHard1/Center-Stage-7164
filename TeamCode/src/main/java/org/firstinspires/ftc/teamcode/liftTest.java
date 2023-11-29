@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class RobotUpTest extends DriveConstance{
+public class liftTest extends DriveConstance{
     int UpHighPos = 0;
-
-    public ElapsedTime UpTime = new ElapsedTime();
     @Override
     public void init() {
         initRobot();
@@ -14,10 +11,12 @@ public class RobotUpTest extends DriveConstance{
 
     @Override
     public void loop() {
-        //Resetting runtime so it can be used to know when to use gamepad for robotUp
+        //Resetting runtime so it can be used to know when to use allow gamepad.a for the lift
         resetRuntime();
 
-        Switch(gamepad1.a);
+        if (getRuntime()>=120)
+            Switch(gamepad1.a);
+
     }
 
     public void Switch(boolean gamepad){
@@ -39,8 +38,7 @@ public class RobotUpTest extends DriveConstance{
             }
         }
         else{
-            lift
-            .setPower(0);
+            lift.setPower(0);
             lift.setMotorDisable();
         }
     }

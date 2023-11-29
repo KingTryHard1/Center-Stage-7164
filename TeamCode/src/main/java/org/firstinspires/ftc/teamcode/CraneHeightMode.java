@@ -13,9 +13,9 @@ public class CraneHeightMode extends DriveConstance{
     }
     @Override
     public void loop() {
-
         int lowestVal = 0;
         int highestVal;
+
         int cranePosition = crane.getCurrentPosition();
         double cranepower = gamepad1.left_stick_y;
 

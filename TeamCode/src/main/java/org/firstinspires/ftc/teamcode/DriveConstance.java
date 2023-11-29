@@ -30,9 +30,9 @@ abstract class DriveConstance extends OpMode {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
-        lift = hardwareMap.get(DcMotorEx.class, "lift");
+        linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
         plane = hardwareMap.get(DcMotorEx.class, "plane");
-        lift = hardwareMap.get(DcMotorEx.class, "robotUP");
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
 
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
