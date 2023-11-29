@@ -8,31 +8,40 @@ public class RobotUpTest extends DriveConstance{
     public ElapsedTime UpTime = new ElapsedTime();
     @Override
     public void init() {
+        initRobot();
 
     }
 
     @Override
     public void loop() {
+        //Resetting runtime so it can be used to know when to use gamepad for robotUp
+        resetRuntime();
 
-        if (gamepad1.a) {
-            UpTime.reset();
-            do {
-                robotUP.setTargetPosition(UpHighPos);
-                robotUP.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robotUP.setPower(1);
+        Switch(gamepad1.a);
+    }
+
+    public void Switch(boolean gamepad){
+        boolean placeholder = false;
+
+        if (gamepad)
+            placeholder = true;
+
+        if (placeholder){
+            lift.setTargetPosition(UpHighPos);
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(1);
+
+            if (gamepad){
+                lift.setTargetPosition(0);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(1);
 
             }
-            while (UpTime.seconds() <= 2);
         }
-        if (gamepad1.a) {
-            do {
-                robotUP.setTargetPosition(0);
-                robotUP.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robotUP.setPower(1);
-
-            }
-            while (true);
-
+        else{
+            lift
+            .setPower(0);
+            lift.setMotorDisable();
         }
     }
 }
