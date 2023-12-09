@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Size;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -14,14 +15,20 @@ abstract class DriveConstance extends OpMode {
 
     AprilTagProcessor myAprilTagProcessor;
     VisionPortal myVisionPortal;
+
     DcMotorEx frontLeft;
     DcMotorEx frontRight;
     DcMotorEx backLeft;
     DcMotorEx backRight;
+
     DcMotorEx crane;
     DcMotorEx linearLift;
     DcMotorEx plane;
     DcMotorEx lift;
+    CRServo sweeper;
+
+    int craneHighestPosition = -2100;
+    int liftHighestPosition = 9529;
 
     void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -34,10 +41,15 @@ abstract class DriveConstance extends OpMode {
         plane = hardwareMap.get(DcMotorEx.class, "plane");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
 
+        sweeper = hardwareMap.get(CRServo.class, "sweeper");
+
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        plane.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
