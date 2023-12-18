@@ -19,18 +19,24 @@ public class CraneTest extends DriveConstance{
 
     @Override
     public void loop() {
-        boolean linearLiftUp = gamepad1.right_bumper;
-        boolean linearLiftDown = gamepad1.left_bumper;
+        double linearLiftUp = gamepad1.right_trigger;
+        double linearLiftDown = gamepad1.left_trigger;
 
         boolean liftUp = gamepad1.dpad_up;
         boolean liftDown = gamepad1.dpad_down;
 
-        boolean planeOn = gamepad1.y;
-        boolean planeOff = gamepad1.x;
+        boolean planeOnSwitch = Switch(gamepad1.b, false);
 
         double throttle = gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
+
+        boolean sweeperOnSwitch = Switch(gamepad1.a, false);
+
+        boolean craneOnSwitch = Switch(gamepad1.y, false);
+
+        boolean outtakeClosed = gamepad1.left_bumper;
+        boolean outtakeOpen = gamepad1.right_bumper;
 
         frontLeft.setPower(throttle);
         frontRight.setPower(throttle);
@@ -47,12 +53,10 @@ public class CraneTest extends DriveConstance{
         backLeft.setPower(-turn);
         backRight.setPower(turn);
 
-        if (linearLiftUp)
-            linearLift.setPower(.4);
-        if (linearLiftDown)
-            linearLift.setPower(-.3);
-        else
-            linearLift.setPower(0);
+
+        linearLift.setPower(linearLiftUp);
+
+        linearLift.setPower(linearLiftDown);
 
         if (liftUp){
             lift.setTargetPosition(liftHighestPosition);
@@ -65,24 +69,35 @@ public class CraneTest extends DriveConstance{
             lift.setPower(1);
         }
 
-        if (planeOn)
+        if (planeOnSwitch)
             plane.setPower(1);
-        if (planeOff)
+        else
             plane.setPower(0);
 
-        if (gamepad1.a) {
+        if (craneOnSwitch) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(1);
 
         }
-
-        if (gamepad1.b) {
+        else {
             crane.setTargetPosition(0);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(1);
 
         }
+
+        if (sweeperOnSwitch) {
+            sweeper.setPower(1);
+        }
+        else
+            sweeper.setPower(0);
+
+        if (outtakeOpen)
+            outtake.setPosition(0);
+        if (outtakeClosed)
+            outtake.setPosition(.5);
+
     }
 }
 
