@@ -11,7 +11,7 @@ public class SwitchTest extends DriveConstance{
 
     @Override
     public void loop() {
-        if (Switch(gamepad1.a, false)) {
+        if (Switch(gamepad1.a)) {
             sweeper.setPower(1);
         }
         else

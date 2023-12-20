@@ -20,20 +20,20 @@ public class CraneTest extends DriveConstance{
     @Override
     public void loop() {
         double linearLiftUp = gamepad1.right_trigger;
-        double linearLiftDown = gamepad1.left_trigger;
+        double linearLiftDown = -gamepad1.left_trigger;
 
         boolean liftUp = gamepad1.dpad_up;
         boolean liftDown = gamepad1.dpad_down;
 
-        boolean planeOnSwitch = Switch(gamepad1.b, false);
+        boolean planeOnSwitch = Switch(gamepad1.b);
 
         double throttle = gamepad1.left_stick_y;
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        boolean sweeperOnSwitch = Switch(gamepad1.a, false);
+        boolean sweeperOnSwitch = Switch(gamepad1.a);
 
-        boolean craneOnSwitch = Switch(gamepad1.y, false);
+        boolean craneOnSwitch = Switch(gamepad1.y);
 
         boolean outtakeClosed = gamepad1.left_bumper;
         boolean outtakeOpen = gamepad1.right_bumper;
