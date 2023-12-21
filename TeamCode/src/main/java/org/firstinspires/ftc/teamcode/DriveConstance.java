@@ -15,10 +15,8 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 abstract class DriveConstance extends OpMode {
-
     AprilTagProcessor myAprilTagProcessor;
     VisionPortal myVisionPortal;
-
     DcMotorEx frontLeft;
     DcMotorEx frontRight;
     DcMotorEx backLeft;
@@ -77,16 +75,22 @@ abstract class DriveConstance extends OpMode {
                 .build();
 
     }
-    boolean placeHolder = false;
     static ElapsedTime timeSleep = new ElapsedTime();
-    public boolean Switch(boolean gamepad){
+    public boolean Switch(boolean gamepad) {
 
-        if (gamepad & timeSleep.milliseconds() >= 500){
-            timeSleep.reset();
+        boolean placeHolder = false;
 
-            placeHolder = !placeHolder;
+        while (timeSleep.seconds()<1000) {
+
+            if (gamepad & timeSleep.milliseconds() >= 500) {
+                timeSleep.reset();
+
+                placeHolder = !placeHolder;
+            }
+            return placeHolder;
         }
 
         return placeHolder;
+
     }
 }
