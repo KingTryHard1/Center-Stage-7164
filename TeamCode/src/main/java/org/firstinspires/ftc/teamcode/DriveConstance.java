@@ -30,7 +30,7 @@ abstract class DriveConstance extends OpMode {
     Servo outtake;
 
     int craneHighestPosition = -2100;
-    int liftHighestPosition = 7875;
+    int liftHighestPosition = 5000;
 
     void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");

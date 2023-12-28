@@ -80,7 +80,7 @@ public class CraneTest extends DriveConstance{
             crane.setPower(1);
 
         }
-        else {
+        else if (!craneOnSwitch){
             crane.setTargetPosition(0);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(1);
@@ -90,7 +90,7 @@ public class CraneTest extends DriveConstance{
         if (sweeperOnSwitch) {
             sweeper.setPower(1);
         }
-        else
+        else if (!sweeperOnSwitch)
             sweeper.setPower(0);
 
         if (outtakeOpen)
