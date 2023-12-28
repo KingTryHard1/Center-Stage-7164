@@ -31,9 +31,9 @@ public class CraneTest extends DriveConstance{
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        boolean sweeperOnSwitch = Switch(gamepad1.a);
+        boolean sweeperOnSwitch = Switch2(gamepad1.a);
 
-        boolean craneOnSwitch = Switch(gamepad1.y);
+        boolean craneOnSwitch = Switch3(gamepad1.y);
 
         boolean outtakeClosed = gamepad1.left_bumper;
         boolean outtakeOpen = gamepad1.right_bumper;

@@ -13,8 +13,8 @@ public class SwitchTest extends DriveConstance{
     public void loop() {
         if (Switch(gamepad1.a)) {
             sweeper.setPower(1);
-        }
-        else
+        } else
             sweeper.setPower(0);
+
     }
 }

@@ -75,18 +75,30 @@ abstract class DriveConstance extends OpMode {
                 .build();
 
     }
-    static boolean placeHolder(){
-        return placeHolder();
-    }
     static ElapsedTime timeSleep = new ElapsedTime();
+    boolean placeHolder = false;
     public boolean Switch(boolean gamepad) {
-        boolean placeHolder = placeHolder();
-
         if (gamepad && timeSleep.milliseconds() >= 500){
             placeHolder = !placeHolder;
 
         }
         return placeHolder;
+    }
+    boolean placeHolder2 = false;
+    public boolean Switch2(boolean gamepad) {
+        if (gamepad && timeSleep.milliseconds() >= 500){
+            placeHolder2 = !placeHolder2;
+
+        }
+        return placeHolder;
+    }
+    boolean placeHolder3 = false;
+    public boolean Switch3(boolean gamepad) {
+        if (gamepad && timeSleep.milliseconds() >= 500){
+            placeHolder3 = !placeHolder3;
+
+        }
+        return placeHolder3;
     }
 }
 
