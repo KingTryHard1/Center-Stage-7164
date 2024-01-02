@@ -19,9 +19,9 @@ public class CraneTest extends DriveConstance{
 
     @Override
     public void loop() {
-        double linearLiftUp = gamepad1.right_trigger;
-        double linearLiftDown = -gamepad1.left_trigger;
 
+        double linearLiftUp = gamepad1.left_trigger;
+        double linearLiftDown = -gamepad1.right_trigger;
         boolean liftUp = gamepad1.dpad_up;
         boolean liftDown = gamepad1.dpad_down;
 
@@ -33,10 +33,15 @@ public class CraneTest extends DriveConstance{
 
         boolean sweeperOnSwitch = Switch2(gamepad1.a);
 
-        boolean craneOnSwitch = Switch3(gamepad1.y);
+        //boolean craneOnSwitch = Switch3(gamepad1.y);
+        double cranepower = gamepad1.right_stick_y;
 
         boolean outtakeClosed = gamepad1.left_bumper;
         boolean outtakeOpen = gamepad1.right_bumper;
+
+        telemetry.addData("linearLiftUp",linearLiftUp);
+        telemetry.addData("linearliftDown",linearLiftDown);
+        telemetry.update();
 
         frontLeft.setPower(throttle);
         frontRight.setPower(throttle);
@@ -74,7 +79,7 @@ public class CraneTest extends DriveConstance{
         else
             plane.setPower(0);
 
-        if (craneOnSwitch) {
+        /*if (craneOnSwitch) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(1);
@@ -86,6 +91,8 @@ public class CraneTest extends DriveConstance{
             crane.setPower(1);
 
         }
+         */
+        crane.setPower(cranepower);
 
         if (sweeperOnSwitch) {
             sweeper.setPower(1);
@@ -99,5 +106,6 @@ public class CraneTest extends DriveConstance{
             outtake.setPosition(.5);
 
     }
+
 }
 
