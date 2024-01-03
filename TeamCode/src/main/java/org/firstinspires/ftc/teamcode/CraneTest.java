@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
 public class CraneTest extends DriveConstance{
@@ -31,9 +32,9 @@ public class CraneTest extends DriveConstance{
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        boolean sweeperOnSwitch = Switch2(gamepad1.a);
+        boolean sweeperOnSwitch = Switch(gamepad1.a);
 
-        boolean craneOnSwitch = Switch3(gamepad1.y);
+        boolean craneOnSwitch = Switch(gamepad1.y);
 
         boolean outtakeClosed = gamepad1.left_bumper;
         boolean outtakeOpen = gamepad1.right_bumper;
@@ -53,10 +54,13 @@ public class CraneTest extends DriveConstance{
         backLeft.setPower(-turn);
         backRight.setPower(turn);
 
-
-        linearLift.setPower(linearLiftUp);
-
-        linearLift.setPower(linearLiftDown);
+        if (linearLiftUp>0) {
+            linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+            linearLift.setPower(linearLiftUp);
+        } else if (linearLiftDown>0) {
+            linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+            linearLift.setPower(linearLiftDown);
+        }
 
         if (liftUp){
             lift.setTargetPosition(liftHighestPosition);
