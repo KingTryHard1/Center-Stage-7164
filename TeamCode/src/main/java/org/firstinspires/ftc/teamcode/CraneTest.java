@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
 @TeleOp
 public class CraneTest extends DriveConstance{
     @Override
@@ -21,7 +20,8 @@ public class CraneTest extends DriveConstance{
     public void loop() {
 
         double linearLiftUp = gamepad1.left_trigger;
-        double linearLiftDown = -gamepad1.right_trigger;
+        double linearLiftDown = gamepad1.right_trigger;
+
         boolean liftUp = gamepad1.dpad_up;
         boolean liftDown = gamepad1.dpad_down;
 
@@ -31,7 +31,7 @@ public class CraneTest extends DriveConstance{
         double strafe = gamepad1.left_stick_x;
         double turn = gamepad1.right_stick_x;
 
-        boolean sweeperOnSwitch = Switch2(gamepad1.a);
+        boolean sweeperOnSwitch = Switch(gamepad1.a);
 
         //boolean craneOnSwitch = Switch3(gamepad1.y);
         double cranepower = gamepad1.right_stick_y;
@@ -58,10 +58,17 @@ public class CraneTest extends DriveConstance{
         backLeft.setPower(-turn);
         backRight.setPower(turn);
 
+        /*if (linearLiftUp>0) {
+            linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+            linearLift.setPower(linearLiftUp);
+        } else if (linearLiftDown>0) {
+            linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+            linearLift.setPower(linearLiftDown);
+        }
 
+         */
         linearLift.setPower(linearLiftUp);
-
-        linearLift.setPower(linearLiftDown);
+        linearLift.setPower(-1*linearLiftDown);
 
         if (liftUp){
             lift.setTargetPosition(liftHighestPosition);
