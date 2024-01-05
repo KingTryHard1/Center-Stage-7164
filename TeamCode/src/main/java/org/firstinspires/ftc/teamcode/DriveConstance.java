@@ -14,8 +14,6 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 abstract class DriveConstance extends OpMode {
     AprilTagProcessor myAprilTagProcessor;
     VisionPortal myVisionPortal;
@@ -78,17 +76,29 @@ abstract class DriveConstance extends OpMode {
 
     }
     static ElapsedTime timeSleep = new ElapsedTime();
-    private static final float timeWait = 1f;
-    static boolean Switch(boolean gamepad) {
-        AtomicBoolean value = new AtomicBoolean(false);
+    boolean placeHolder = false;
+    public boolean Switch(boolean gamepad) {
+        if (gamepad && timeSleep.milliseconds() >= 500){
+            placeHolder = !placeHolder;
 
-        if (gamepad) {
-            if (timeSleep.seconds()>timeWait) {
-                value.set(!value.get());
-                timeSleep.reset();
-            }
         }
-        return value.get();
+        return placeHolder;
+    }
+    boolean placeHolder2 = false;
+    public boolean Switch2(boolean gamepad) {
+        if (gamepad && timeSleep.milliseconds() >= 500){
+            placeHolder2 = !placeHolder2;
+
+        }
+        return placeHolder;
+    }
+    boolean placeHolder3 = false;
+    public boolean Switch3(boolean gamepad) {
+        if (gamepad && timeSleep.milliseconds() >= 500){
+            placeHolder3 = !placeHolder3;
+
+        }
+        return placeHolder3;
     }
 }
 
