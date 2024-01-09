@@ -25,6 +25,7 @@ abstract class DriveConstance extends OpMode {
     DcMotorEx crane;
     DcMotorEx linearLift;
     DcMotorEx plane;
+    Servo planePush;
     DcMotorEx lift;
     CRServo sweeper;
     Servo outtake;
@@ -41,6 +42,7 @@ abstract class DriveConstance extends OpMode {
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
         plane = hardwareMap.get(DcMotorEx.class, "plane");
+        planePush = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
 
         sweeper = hardwareMap.get(CRServo.class, "sweeper");
@@ -90,7 +92,7 @@ abstract class DriveConstance extends OpMode {
             placeHolder2 = !placeHolder2;
 
         }
-        return placeHolder;
+        return placeHolder2;
     }
     boolean placeHolder3 = false;
     public boolean Switch3(boolean gamepad) {
