@@ -14,7 +14,7 @@ public class planeTest extends DriveConstance{
         boolean planeOff = gamepad1.x;
 
         if (planeOn)
-            plane.setPower(1);
+            plane.setPower(.7);
         if (planeOff)
             plane.setPower(0);
     }
