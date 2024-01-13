@@ -41,6 +41,7 @@ abstract class DriveConstance extends OpMode {
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
+
         plane = hardwareMap.get(DcMotorEx.class, "plane");
         planePush = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
