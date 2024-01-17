@@ -34,7 +34,7 @@ public class TwoPlayer extends DriveConstance{
         boolean sweeperIn = gamepad2.a;
         boolean sweeperOut = gamepad2.b;
 
-        boolean cranepower = gamepad2.y;
+        double cranepower = -gamepad2.right_stick_y;
 
         boolean outtakeClosed = gamepad2.left_bumper;
         boolean outtakeOpen = gamepad2.right_bumper;
@@ -65,28 +65,31 @@ public class TwoPlayer extends DriveConstance{
             lift.setPower(0);
 
         if (planepower) {
-            plane.setPower(.8);
+            plane.setPower(.9);
             planePush.setPosition(.4);
 
         }
         else {
             plane.setPower(0);
-            planePush.setPosition(.8);
+            planePush.setPosition(maxPlanePower/100);
         }
 
-        if (cranepower) {
+        telemetry.addData("cranepower: ", cranepower);
+        if (cranepower>0.1) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            crane.setPower(1);
+            crane.setPower(cranepower);
 
         }
-        else {
+        else if (cranepower<-0.1) {
             crane.setTargetPosition(0);
 
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            crane.setPower(1);
+            crane.setPower(cranepower);
 
         }
+        else
+            crane.setPower(0);
 
         if (sweeperIn)
             sweeper.setPower(1);
@@ -97,9 +100,9 @@ public class TwoPlayer extends DriveConstance{
             sweeper.setPower(0);
 
         if (outtakeOpen)
-            outtake.setPosition(0);
+            outtake.setPosition(.4);
         else //if (outtakeClosed)
-            outtake.setPosition(.5);
+            outtake.setPosition(0);
 
     }
 }

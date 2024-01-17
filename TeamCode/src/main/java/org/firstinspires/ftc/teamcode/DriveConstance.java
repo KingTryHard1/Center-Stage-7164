@@ -14,6 +14,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 abstract class DriveConstance extends OpMode {
     AprilTagProcessor myAprilTagProcessor;
     VisionPortal myVisionPortal;
@@ -30,8 +32,9 @@ abstract class DriveConstance extends OpMode {
     CRServo sweeper;
     Servo outtake;
 
-    int craneHighestPosition = -2100;
+    int craneHighestPosition = -1650;
     int liftHighestPosition = 5000;
+    double maxPlanePower = 45; //This is a percentage
 
     void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -56,6 +59,11 @@ abstract class DriveConstance extends OpMode {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         plane.setDirection(DcMotorSimple.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
@@ -102,6 +110,33 @@ abstract class DriveConstance extends OpMode {
 
         }
         return placeHolder3;
+    }
+    public boolean Switch4(boolean gamepad){
+            AtomicBoolean placeHolder4 = new AtomicBoolean(false);
+            if (gamepad && timeSleep.milliseconds() >= 500) {
+                placeHolder4.set(!placeHolder4.get());
+
+            }
+
+            return placeHolder4.get();
+    }
+    public void forward(int amount){
+
+        frontLeft.setTargetPosition(amount);
+        frontRight.setTargetPosition(amount);
+        backLeft.setTargetPosition(amount);
+        backRight.setTargetPosition(amount);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(-1);
+        frontRight.setPower(-1);
+        backLeft.setPower(-1);
+        backRight.setPower(-1);
+
     }
 }
 
