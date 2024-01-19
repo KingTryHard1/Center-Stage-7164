@@ -32,7 +32,7 @@ abstract class DriveConstance extends OpMode {
     CRServo sweeper;
     Servo outtake;
 
-    int craneHighestPosition = -1650;
+    int craneHighestPosition = -1800;
     int liftHighestPosition = 5000;
     double maxPlanePower = 45; //This is a percentage
 
@@ -52,8 +52,10 @@ abstract class DriveConstance extends OpMode {
         sweeper = hardwareMap.get(CRServo.class, "sweeper");
         outtake = hardwareMap.get(Servo.class, "outtake");
 
-        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -86,40 +88,7 @@ abstract class DriveConstance extends OpMode {
                 .build();
 
     }
-    static ElapsedTime timeSleep = new ElapsedTime();
-    boolean placeHolder = false;
-    public boolean Switch(boolean gamepad) {
-        if (gamepad && timeSleep.milliseconds() >= 500){
-            placeHolder = !placeHolder;
 
-        }
-        return placeHolder;
-    }
-    boolean placeHolder2 = false;
-    public boolean Switch2(boolean gamepad) {
-        if (gamepad && timeSleep.milliseconds() >= 500){
-            placeHolder2 = !placeHolder2;
-
-        }
-        return placeHolder2;
-    }
-    boolean placeHolder3 = false;
-    public boolean Switch3(boolean gamepad) {
-        if (gamepad && timeSleep.milliseconds() >= 500){
-            placeHolder3 = !placeHolder3;
-
-        }
-        return placeHolder3;
-    }
-    public boolean Switch4(boolean gamepad){
-            AtomicBoolean placeHolder4 = new AtomicBoolean(false);
-            if (gamepad && timeSleep.milliseconds() >= 500) {
-                placeHolder4.set(!placeHolder4.get());
-
-            }
-
-            return placeHolder4.get();
-    }
     public void forward(int amount){
 
         frontLeft.setTargetPosition(amount);

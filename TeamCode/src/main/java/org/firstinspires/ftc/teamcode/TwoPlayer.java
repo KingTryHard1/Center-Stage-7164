@@ -14,22 +14,30 @@ public class TwoPlayer extends DriveConstance{
 
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
     }
 
     @Override
     public void loop() {
-        double linearLiftUp = gamepad2.right_trigger;
-        double linearLiftDown = -gamepad2.left_trigger;
+
+        double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+        double x = gamepad1.left_stick_x; // *1.1 Counteract imperfect strafing
+        double rx = gamepad1.right_stick_x;
+
+        // Denominator is the largest motor power (absolute value) or 1
+        // This ensures all the powers maintain the same ratio,
+        // but only if at least one is out of the range [-1, 1]
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        double frontLeftPower = (y + x + rx) / denominator;
+        double backLeftPower = (y - x + rx) / denominator;
+        double frontRightPower = (y - x - rx) / denominator;
+        double backRightPower = (y + x - rx) / denominator;
+
+        double linearLiftPower = gamepad2.left_stick_y;
 
         boolean liftUp = gamepad1.dpad_up;
         boolean liftDown = gamepad1.dpad_down;
 
         boolean planepower = gamepad1.b;
-
-        double throttle = gamepad1.left_stick_y;
-        double strafe = gamepad1.left_stick_x;
-        double turn = gamepad1.right_stick_x;
 
         boolean sweeperIn = gamepad2.a;
         boolean sweeperOut = gamepad2.b;
@@ -39,23 +47,12 @@ public class TwoPlayer extends DriveConstance{
         boolean outtakeClosed = gamepad2.left_bumper;
         boolean outtakeOpen = gamepad2.right_bumper;
 
-        frontLeft.setPower(throttle);
-        frontRight.setPower(throttle);
-        backLeft.setPower(throttle);
-        backRight.setPower(throttle);
+        frontLeft.setPower(frontLeftPower);
+        backLeft.setPower(backLeftPower);
+        frontRight.setPower(frontRightPower);
+        backRight.setPower(backRightPower);
 
-        frontLeft.setPower(-strafe);
-        frontRight.setPower(strafe);
-        backLeft.setPower(strafe);
-        backRight.setPower(-strafe);
-
-        frontLeft.setPower(-turn);
-        frontRight.setPower(turn);
-        backLeft.setPower(-turn);
-        backRight.setPower(turn);
-
-        linearLift.setPower(linearLiftUp);
-        linearLift.setPower(linearLiftDown);
+        linearLift.setPower(linearLiftPower);
 
         if (liftUp)
             lift.setPower(1);
@@ -74,7 +71,6 @@ public class TwoPlayer extends DriveConstance{
             planePush.setPosition(maxPlanePower/100);
         }
 
-        telemetry.addData("cranepower: ", cranepower);
         if (cranepower>0.1) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -100,7 +96,7 @@ public class TwoPlayer extends DriveConstance{
             sweeper.setPower(0);
 
         if (outtakeOpen)
-            outtake.setPosition(.4);
+            outtake.setPosition(1);
         else //if (outtakeClosed)
             outtake.setPosition(0);
 
