@@ -10,12 +10,20 @@ public class planeTest extends DriveConstance{
 
     @Override
     public void loop() {
-        boolean planeOn = gamepad1.y;
-        boolean planeOff = gamepad1.x;
+        boolean planeOn100 = gamepad1.y;
+        boolean planeOn80 = gamepad1.x;
+        boolean planeOn60 = gamepad1.a;
+        boolean planeOn40 = gamepad1.b;
 
-        if (planeOn)
-            plane.setPower(.7);
-        if (planeOff)
-            plane.setPower(0);
+
+        if (planeOn100)
+            plane.setPower(1);
+        if (planeOn80)
+            plane.setPower(.8);
+        if (planeOn60)
+            plane.setPower(.6);
+        if (planeOn40)
+            plane.setPower(.4);
+
     }
 }
