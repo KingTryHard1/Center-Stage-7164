@@ -18,12 +18,14 @@ public class planeTest extends DriveConstance{
 
         if (planeOn100)
             plane.setPower(1);
-        if (planeOn80)
+        else if (planeOn80)
             plane.setPower(.8);
-        if (planeOn60)
+        else if (planeOn60)
             plane.setPower(.6);
-        if (planeOn40)
+        else if (planeOn40)
             plane.setPower(.4);
+        else
+            plane.setPower(0);
 
     }
 }
