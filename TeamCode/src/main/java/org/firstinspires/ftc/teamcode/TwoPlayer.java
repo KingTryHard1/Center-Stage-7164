@@ -68,7 +68,7 @@ public class TwoPlayer extends DriveConstance{
         }
         else {
             plane.setPower(0);
-            planePush.setPosition(maxPlanePower/100);
+            planePush.setPosition(0);
         }
 
         if (cranepower>0.1) {
