@@ -1,8 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.DriveConstance;
+
 @TeleOp
-public class planeTest extends DriveConstance{
+public class planeTest extends DriveConstance {
     int planePower = 0;
     @Override
     public void init() {

@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.DriveConstance;
+
 @TeleOp
-public class DriveTrainEncoderTest extends DriveConstance{
+public class DriveTrainEncoderTest extends DriveConstance {
     @Override
     public void init() {
         initRobot();

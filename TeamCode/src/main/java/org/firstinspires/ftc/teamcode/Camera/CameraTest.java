@@ -1,10 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Camera;
 
+import org.firstinspires.ftc.teamcode.DriveConstance;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.List;
 
-public class CameraTest extends DriveConstance{
+public class CameraTest extends DriveConstance {
     final int DESIRED_TAG_ID = 1;
     private AprilTagDetection desiredTag = null;
     boolean targetFound = false;

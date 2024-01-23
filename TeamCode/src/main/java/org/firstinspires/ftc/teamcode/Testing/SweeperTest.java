@@ -1,10 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.DriveConstance;
+
 @Disabled
-public class SweeperTest extends DriveConstance{
+public class SweeperTest extends DriveConstance {
     @Override
     public void init() {
         initRobot();
