@@ -14,30 +14,28 @@ public class planeTest extends DriveConstance {
 
     @Override
     public void loop() {
-        boolean planePowerPlus = gamepad1.y;
-        boolean planePowerSub = gamepad1.x;
-        boolean planeOn = gamepad1.a;
-        boolean planeOff = gamepad1.b;
+        boolean planeOn100 = gamepad1.y;
+        boolean planeOn80 = gamepad1.x;
+        boolean planeOn60 = gamepad1.a;
+        boolean planeOn40 = gamepad1.b;
 
-        telemetry.addData("Plane Power", planePower);
-        if (planePowerPlus){
-            if (planePower < 10){
-                planePower++;
-            }
-        }
-        if (planePowerSub) {
-            if (planePower < 10) {
-                planePower--;
-            }
-        }
 
-        if (planeOn) {
-            plane.setPower(planePower / 100);
-            planePush.setPosition(.4);
-        }else {
+
+        if (planeOn100)
+            plane.setPower(.55);
+        else if (planeOn80)
+            plane.setPower(.50);
+        else if (planeOn60)
+            plane.setPower(.45);
+        else if (planeOn40)
+            plane.setPower(.4);
+        else
             plane.setPower(0);
+
+        if (gamepad1.left_bumper)
             planePush.setPosition(0);
-        }
+        else
+            planePush.setPosition(.4);
 
 
     }
