@@ -100,12 +100,5 @@ public class TwoPlayer extends DriveConstance{
         else //if (outtakeClosed)
             outtake.setPosition(0);
 
-
-
-        telemetry.addData("pos1",plane.getCurrentPosition());
-        telemetry.addData("pos1",linearLift.getCurrentPosition());
-        telemetry.update();
-
-
     }
 }
