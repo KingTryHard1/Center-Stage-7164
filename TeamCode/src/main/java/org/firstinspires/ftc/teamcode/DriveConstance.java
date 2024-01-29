@@ -92,14 +92,6 @@ public abstract class DriveConstance extends OpMode {
 
     }
 
-    public void DashboardChangeImage() {
-
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay()
-                .drawImage("/Dashboard/Field view.png",24,24,48,48);
-
-    }
-
     public void forward(int amount){
 
         frontLeft.setTargetPosition(amount);
