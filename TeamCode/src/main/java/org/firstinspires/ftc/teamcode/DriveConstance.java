@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Size;
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -88,6 +89,14 @@ public abstract class DriveConstance extends OpMode {
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
                 .build();
+
+    }
+
+    public void DashboardChangeImage() {
+
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay()
+                .drawImage("/Dashboard/Field view.png",24,24,48,48);
 
     }
 
