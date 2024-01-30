@@ -13,29 +13,40 @@ public class RedClose extends AutonomousDriveConstance {
     @Override
     public void runOpMode() throws InterruptedException {
         initRobot();
+        crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        Pose2d startPose = new Pose2d(10, -61, 0);
+        Pose2d startPose = new Pose2d(10, -61, Math.toRadians(90));
         drive.setPoseEstimate(startPose);
         waitForStart();
         TrajectorySequence Robot = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(14.5,-34), Math.toRadians(90))
                 .addTemporalMarker(() -> {
-                    sweeper.setPower(1);
-                    crane.setTargetPosition(400);
-                    crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    crane.setPower(1);
-                    sweeper.setPower(0);
+                    craneStopper.setPosition(0);
+                    sweeper.setPower(-1);
+                    craneToPos(.5,-1400);
 
                 })
                 .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(49, -42, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(38, -37, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
+                    sweeper.setPower(0);
                     outtake.setPosition(1);
                 })
+                .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    linearLiftToPos(1, -3000);
+                    outtake.setPosition(0);
+                    craneStopper.setPosition(1);
+                    craneToPos(.7,0);
 
-                .setReversed(true)
+
+
+                })
+
+                /*.setReversed(true)
                 .splineToSplineHeading(new Pose2d(25,-11.5,Math.toRadians(180)), Math.toRadians(180))
                 .lineTo(new Vector2d(-56,-11.5))
                 .addDisplacementMarker(() -> {
@@ -79,7 +90,9 @@ public class RedClose extends AutonomousDriveConstance {
 
                 })
 
-                .strafeTo(new Vector2d(49,-12))
+                 */
+
+                .strafeTo(new Vector2d(46,-12))
                 .lineTo(new Vector2d(61, -12))
 
                 .build();

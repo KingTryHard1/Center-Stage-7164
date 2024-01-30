@@ -112,5 +112,16 @@ public abstract class AutonomousDriveConstance extends LinearOpMode {
         backRight.setPower(-1);
 
     }
+    public void craneToPos(double power, int position){
+        crane.setTargetPosition(position);
+        crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        crane.setPower(power);
+    }
+
+    public void linearLiftToPos(double power, int position){
+        linearLift.setTargetPosition(position);
+        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        linearLift.setPower(power);
+    }
 }
 

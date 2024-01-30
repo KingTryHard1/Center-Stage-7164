@@ -79,7 +79,6 @@ public class TwoPlayer extends DriveConstance{
         }
         else if (cranepower<-0.1) {
             crane.setTargetPosition(0);
-
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(cranepower);
 

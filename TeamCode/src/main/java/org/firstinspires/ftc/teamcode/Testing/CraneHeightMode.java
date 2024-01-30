@@ -15,18 +15,17 @@ public class CraneHeightMode extends DriveConstance {
     @Override
     public void init() {
         initRobot();
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        linearLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
 
     @Override
     public void loop() {
-        double cranepower = gamepad1.right_stick_y;
-        lift.setPower(cranepower);
+        linearLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        telemetry.addData("Highest Position: ", lift.getCurrentPosition());
+        telemetry.addData("Highest Position: ", linearLift.getCurrentPosition());
         telemetry.update();
     }
 }
