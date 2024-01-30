@@ -42,8 +42,6 @@ public class RedClose extends AutonomousDriveConstance {
                     craneStopper.setPosition(1);
                     craneToPos(.7,0);
 
-
-
                 })
 
                 /*.setReversed(true)
@@ -92,7 +90,7 @@ public class RedClose extends AutonomousDriveConstance {
 
                  */
 
-                .strafeTo(new Vector2d(46,-12))
+                .strafeTo(new Vector2d(38,-12))
                 .lineTo(new Vector2d(61, -12))
 
                 .build();
