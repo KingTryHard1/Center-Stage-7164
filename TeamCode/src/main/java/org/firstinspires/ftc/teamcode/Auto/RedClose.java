@@ -97,5 +97,10 @@ public class RedClose extends AutonomousDriveConstance {
 
 
         drive.followTrajectorySequence(Robot);
+
+        if (isStopRequested()){
+            PoseStorage.currentPose = drive.getPoseEstimate();
+
+        }
     }
 }

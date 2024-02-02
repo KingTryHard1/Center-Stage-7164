@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import android.util.Size;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -37,14 +38,14 @@ public abstract class AutonomousDriveConstance extends LinearOpMode {
     public int liftHighestPosition = 5000;
     public double maxPlanePower = 45; //This is a percentage
 
-    public void initRobot(){
+    public void initRobot() {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
-        craneStopper = hardwareMap.get(Servo.class,"craneStopper");
+        craneStopper = hardwareMap.get(Servo.class, "craneStopper");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
 
         plane = hardwareMap.get(DcMotorEx.class, "plane");
@@ -71,7 +72,7 @@ public abstract class AutonomousDriveConstance extends LinearOpMode {
 
     }
 
-    public void initCam(){
+    public void initCam() {
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
@@ -94,7 +95,7 @@ public abstract class AutonomousDriveConstance extends LinearOpMode {
 
     }
 
-    public void forward(int amount){
+    public void forward(int amount) {
 
         frontLeft.setTargetPosition(amount);
         frontRight.setTargetPosition(amount);
@@ -112,13 +113,14 @@ public abstract class AutonomousDriveConstance extends LinearOpMode {
         backRight.setPower(-1);
 
     }
-    public void craneToPos(double power, int position){
+
+    public void craneToPos(double power, int position) {
         crane.setTargetPosition(position);
         crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         crane.setPower(power);
     }
 
-    public void linearLiftToPos(double power, int position){
+    public void linearLiftToPos(double power, int position) {
         linearLift.setTargetPosition(position);
         linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         linearLift.setPower(power);

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Auto.AutonomousDriveConstance;
+import org.firstinspires.ftc.teamcode.Auto.PoseStorage;
 import org.firstinspires.ftc.teamcode.Auto.drive.SampleMecanumDrive;
 
 @TeleOp
@@ -14,6 +15,7 @@ public class RRTeleopTest extends AutonomousDriveConstance {
         initRobot();
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        drive.setPoseEstimate(PoseStorage.currentPose);
 
         init();
 
