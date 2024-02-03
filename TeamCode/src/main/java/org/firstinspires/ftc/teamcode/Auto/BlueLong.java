@@ -7,13 +7,14 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class BlueLong extends AutonomousDriveConstance {
-    double teamElementPos;
-    double distancex =5;
+
+    double  teamElementPos;
+    double distancex = 5;
 
     @Override
     public void runOpMode() throws InterruptedException {
         initRobot();
-        initCam();
+
         Pipeline_Blue detector = new Pipeline_Blue(telemetry);
         webcam.setPipeline(detector);
 

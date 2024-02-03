@@ -2,19 +2,17 @@ package org.firstinspires.ftc.teamcode.Auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Auto.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvCameraFactory;
 
-@Autonomous
-public class BlueClose extends AutonomousDriveConstance {
+public class BlueFar extends AutonomousDriveConstance{
     double teamElementPos;
     double distancex = 5;
     @Override
@@ -198,6 +196,7 @@ public class BlueClose extends AutonomousDriveConstance {
                 .lineTo(new Vector2d(61, -12))
 
                 .build();
+
         if (opModeIsActive()) {
             if (teamElementPos == 2) {
                 drive.followTrajectorySequence(RobotRight);
