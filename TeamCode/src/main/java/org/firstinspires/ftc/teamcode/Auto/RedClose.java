@@ -67,17 +67,17 @@ public class RedClose extends AutonomousDriveConstance {
         }
 
         TrajectorySequence RobotLeft = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(10,-32, Math.toRadians(180)), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(12,-32, Math.toRadians(180)), Math.toRadians(180))
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
-                    sweeper.setPower(-.3);
+                    sweeper.setPower(-1);
                 })
                 .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(38, -37, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(36, -33, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
-                    craneToPos(.5,-1700);
+                    craneToPos(.5,-1600);
                     sweeper.setPower(0);
                 })
                 .waitSeconds(2)
@@ -102,12 +102,12 @@ public class RedClose extends AutonomousDriveConstance {
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1700);
+                    craneToPos(.5,-1500);
 
                 })
                 .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(38, -37, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(42, -37, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     sweeper.setPower(0);
@@ -173,17 +173,17 @@ public class RedClose extends AutonomousDriveConstance {
                 .build();
 
         TrajectorySequence RobotRight = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(13.5,-27), Math.toRadians(0))
+                .splineTo(new Vector2d(10,-27), Math.toRadians(0))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1700);
+                    craneToPos(.5,-1475);
                 })
 
                 .lineToSplineHeading(new Pose2d(10, -47,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToConstantHeading(new Vector2d(38, -37), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(42, -40), Math.toRadians(0))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     sweeper.setPower(0);
@@ -201,6 +201,7 @@ public class RedClose extends AutonomousDriveConstance {
                 .lineTo(new Vector2d(58, -12))
 
                 .build();
+
         if (opModeIsActive()) {
             if (teamElementPos == 2) {
                 drive.followTrajectorySequence(RobotRight);
