@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Auto.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.Auto.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -32,6 +34,7 @@ public class RedClose extends AutonomousDriveConstance {
             @Override
             public void onOpened() {
                 webcam.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+
             }
 
             @Override
@@ -74,10 +77,10 @@ public class RedClose extends AutonomousDriveConstance {
                 })
                 .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(36, -33, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(39, -33, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
-                    craneToPos(.5,-1600);
+                    craneToPos(.5,-1700);
                     sweeper.setPower(0);
                 })
                 .waitSeconds(2)
@@ -102,12 +105,13 @@ public class RedClose extends AutonomousDriveConstance {
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1500);
+                    craneToPos(.5,-1700);
 
                 })
                 .waitSeconds(1)
+                .back(5)
 
-                .lineToSplineHeading(new Pose2d(42, -37, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(39, -39, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     sweeper.setPower(0);
@@ -121,69 +125,26 @@ public class RedClose extends AutonomousDriveConstance {
 
                 })
 
-                /*.setReversed(true)
-                .splineToSplineHeading(new Pose2d(25,-11.5,Math.toRadians(180)), Math.toRadians(180))
-                .lineTo(new Vector2d(-56,-11.5))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .lineTo(new Vector2d(25,-11.5))
-                .splineToConstantHeading(new Vector2d(49, -29), Math.toRadians(0))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .splineToConstantHeading(new Vector2d(25,-11.5), Math.toRadians(180))
-                .lineTo(new Vector2d(-56,-11.5))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .lineTo(new Vector2d(25,-11.5))
-                .splineToConstantHeading(new Vector2d(49, -29), Math.toRadians(0))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                 */
-
-                .strafeTo(new Vector2d(38,-12))
+                .strafeTo(new Vector2d(49,-12))
                 .lineTo(new Vector2d(58, -12))
 
                 .build();
 
         TrajectorySequence RobotRight = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(10,-27), Math.toRadians(0))
+                .lineTo(new Vector2d(13,-27))
+                .turn(Math.toRadians(-90))
+                .back(3)
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1475);
+                    craneToPos(.5,-1700);
                 })
+                .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(10, -47,Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(10, -50,Math.toRadians(0)))
                 .setReversed(false)
-                .splineToConstantHeading(new Vector2d(42, -40), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(39, -42), Math.toRadians(0))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     sweeper.setPower(0);

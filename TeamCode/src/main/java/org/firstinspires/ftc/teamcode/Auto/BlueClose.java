@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Auto;
 
+import com.acmerobotics.dashboard.DashboardCore;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Auto.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Auto.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.Auto.util.DashboardUtil;
+import org.firstinspires.ftc.teamcode.Camera.Pipeline_Blue;
 import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -21,7 +24,7 @@ public class BlueClose extends AutonomousDriveConstance {
     public void runOpMode() throws InterruptedException {
         initRobot();
 
-        Pipeline_Red detector = new Pipeline_Red(telemetry);
+        Pipeline_Blue detector = new Pipeline_Blue(telemetry);
 
         int cameraMonitorViewId = hardwareMap.appContext
                 .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -32,6 +35,7 @@ public class BlueClose extends AutonomousDriveConstance {
             @Override
             public void onOpened() {
                 webcam.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+
             }
 
             @Override
@@ -54,31 +58,39 @@ public class BlueClose extends AutonomousDriveConstance {
                     teamElementPos = 1;
                     break;
                 case RIGHT:
-                    teamElementPos = 3;
-                    break;
-                case MIDDLE:
                     teamElementPos = 2;
                     break;
+                case MIDDLE:
+                    teamElementPos = 3;
+                    break;
                 case NOT_FOUND:
-                    teamElementPos = 3;//should be 4
+                    teamElementPos = 2;//should be 4
                     break;
 
             }
         }
 
-        TrajectorySequence RobotRight = drive.trajectorySequenceBuilder(startPose)
-                .splineToSplineHeading(new Pose2d(10,34, Math.toRadians(-180)), Math.toRadians(-180))
+        TrajectorySequence RobotLeft = drive.trajectorySequenceBuilder(startPose)
+                .lineTo(new Vector2d(13,27))
+                .turn(Math.toRadians(90))
+                .back(3)
+                .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1500);
                 })
                 .waitSeconds(1)
 
-                .lineToSplineHeading(new Pose2d(38, 37, Math.toRadians(0)))
+                .lineToSplineHeading(new Pose2d(10, 50,Math.toRadians(0)))
+                .setReversed(false)
+                .splineToConstantHeading(new Vector2d(39, 42), Math.toRadians(0))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
+                    craneToPos(.5,-1700);
                     sweeper.setPower(0);
+                })
+                .waitSeconds(2)
+                .addTemporalMarker(() -> {
                     outtake.setPosition(1);
                 })
                 .waitSeconds(1)
@@ -90,7 +102,7 @@ public class BlueClose extends AutonomousDriveConstance {
                 })
 
                 .strafeTo(new Vector2d(49,12))
-                .lineTo(new Vector2d(61, 12))
+                .lineTo(new Vector2d(58, 12))
 
                 .build();
 
@@ -99,89 +111,13 @@ public class BlueClose extends AutonomousDriveConstance {
                 .addTemporalMarker(() -> {
                     craneStopper.setPosition(0);
                     sweeper.setPower(-1);
-                    craneToPos(.5,-1500);
+                    craneToPos(.5,-1700);
 
                 })
                 .waitSeconds(1)
+                .back(5)
 
-                .lineToSplineHeading(new Pose2d(38, 37, Math.toRadians(0)))
-                .waitSeconds(1)
-                .addTemporalMarker(() -> {
-                    sweeper.setPower(0);
-                    outtake.setPosition(1);
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    outtake.setPosition(0);
-                    //craneStopper.setPosition(1);
-                    craneToPos(.7,0);
-
-                })
-
-                /*.setReversed(true)
-                .splineToSplineHeading(new Pose2d(25,-11.5,Math.toRadians(180)), Math.toRadians(180))
-                .lineTo(new Vector2d(-56,-11.5))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .lineTo(new Vector2d(25,-11.5))
-                .splineToConstantHeading(new Vector2d(49, -29), Math.toRadians(0))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .splineToConstantHeading(new Vector2d(25,-11.5), Math.toRadians(180))
-                .lineTo(new Vector2d(-56,-11.5))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                .setReversed(false)
-                .lineTo(new Vector2d(25,-11.5))
-                .splineToConstantHeading(new Vector2d(49, -29), Math.toRadians(0))
-                .addDisplacementMarker(() -> {
-
-                })
-                .waitSeconds(2)
-                .addTemporalMarker(()->{
-
-                })
-
-                 */
-
-                .strafeTo(new Vector2d(38,12))
-                .lineTo(new Vector2d(61, 12))
-
-                .build();
-
-        TrajectorySequence RobotLeft = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(13.5,27), Math.toRadians(0))
-                .waitSeconds(1)
-                .addTemporalMarker(() -> {
-                    craneStopper.setPosition(0);
-                    sweeper.setPower(-1);
-                    craneToPos(.5,-1500);
-                })
-                .waitSeconds(2)
-
-                .lineToSplineHeading(new Pose2d(10, 47,Math.toRadians(0)))
-                .setReversed(false)
-                .splineToConstantHeading(new Vector2d(38, 37), Math.toRadians(0))
+                .lineToSplineHeading(new Pose2d(39, 39, Math.toRadians(0)))
                 .waitSeconds(1)
                 .addTemporalMarker(() -> {
                     sweeper.setPower(0);
@@ -196,9 +132,42 @@ public class BlueClose extends AutonomousDriveConstance {
                 })
 
                 .strafeTo(new Vector2d(49,12))
-                .lineTo(new Vector2d(61, 12))
+                .lineTo(new Vector2d(58, 12))
 
                 .build();
+
+        TrajectorySequence RobotRight = drive.trajectorySequenceBuilder(startPose)
+                .splineToSplineHeading(new Pose2d(11, 32, Math.toRadians(-180)), Math.toRadians(-180))
+                .addTemporalMarker(() -> {
+                    craneStopper.setPosition(0);
+                    sweeper.setPower(-1);
+                })
+                .waitSeconds(1)
+                .back(8)
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    craneToPos(.5,-1700);
+                })
+                .waitSeconds(1)
+                .lineToSplineHeading(new Pose2d(39, 27, Math.toRadians(0)))
+                .waitSeconds(1)
+                .addTemporalMarker(() -> {
+                    sweeper.setPower(0);
+                    outtake.setPosition(1);
+                })
+                .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    outtake.setPosition(0);
+                    //craneStopper.setPosition(1);
+                    craneToPos(.7,0);
+
+                })
+
+                .strafeTo(new Vector2d(49,12))
+                .lineTo(new Vector2d(58, 12))
+
+                .build();
+
         if (opModeIsActive()) {
             if (teamElementPos == 2) {
                 drive.followTrajectorySequence(RobotRight);
