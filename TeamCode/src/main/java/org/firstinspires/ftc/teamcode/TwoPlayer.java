@@ -41,9 +41,6 @@ public class TwoPlayer extends DriveConstance{
         boolean planepowerBlue = gamepad1.x;
         boolean planePushBool = gamepad1.left_bumper;
 
-        boolean sweeperIn = gamepad2.a;
-        boolean sweeperOut = gamepad2.b;
-
         double cranepower = -gamepad2.right_stick_y;
 
         boolean outtakeClosed = gamepad2.left_bumper;
@@ -59,7 +56,23 @@ public class TwoPlayer extends DriveConstance{
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
-        linearLift.setPower(linearLiftPower);
+        telemetry.addData("linearlift", linearLift.getPower());
+        telemetry.addData("Linearlift", linearLift.getCurrentPosition());
+        telemetry.addData("LinearliftPower", linearLiftPower);
+
+        if (linearLiftPower>.2)
+            linearLift.setPower(1);
+        else if (linearLiftPower<-.2)
+            linearLift.setPower(-.7);
+        else
+            linearLift.setPower(0);
+
+        /*if (gamepad2.a){
+
+            linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }*/
+        crane.setPower(cranepower);
+
 
         if (liftUp)
             lift.setPower(1);
@@ -85,7 +98,7 @@ public class TwoPlayer extends DriveConstance{
         plane.setPower(0);
     }
 
-        if (cranepower>0.1) {
+        /*if (cranepower>0.1) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             crane.setPower(cranepower);
@@ -100,13 +113,7 @@ public class TwoPlayer extends DriveConstance{
         else
             crane.setPower(0);
 
-        if (sweeperIn)
-            sweeper.setPower(1);
-
-        else if (sweeperOut)
-            sweeper.setPower(-1);
-        else
-            sweeper.setPower(0);
+         */
 
         if (outtakeOpen)
             outtake.setPosition(1);

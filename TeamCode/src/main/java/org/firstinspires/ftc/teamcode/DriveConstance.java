@@ -34,9 +34,8 @@ public abstract class DriveConstance extends OpMode {
     public CRServo sweeper;
     public Servo outtake;
 
-    public int craneHighestPosition = -1800;
-    public int liftHighestPosition = 5000;
-    public double maxPlanePower = 45; //This is a percentage
+    public int craneHighestPosition = -4200;
+    public int linearLiftHighestPosition = -1400;
 
     public void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
@@ -59,6 +58,8 @@ public abstract class DriveConstance extends OpMode {
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
