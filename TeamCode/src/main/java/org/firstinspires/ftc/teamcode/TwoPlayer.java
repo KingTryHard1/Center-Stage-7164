@@ -3,8 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.Testing.Switch;
+
 @TeleOp
-public class TwoPlayer extends DriveConstance{
+public class TwoPlayer extends DriveConstance {
     @Override
     public void init() {
         initRobot();
@@ -46,19 +48,21 @@ public class TwoPlayer extends DriveConstance{
         boolean outtakeClosed = gamepad2.left_bumper;
         boolean outtakeOpen = gamepad2.right_bumper;
 
-        if (gamepad2.dpad_left)
+        Switch test = new Switch();
+        if (test.returnBool())
             craneStopper.setPosition(0);
-        else if (gamepad2.dpad_right)
+        else
             craneStopper.setPosition(1);
+        test.changeBool(gamepad2.dpad_left);
 
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);
         frontRight.setPower(frontRightPower);
         backRight.setPower(backRightPower);
 
-        telemetry.addData("linearlift", linearLift.getPower());
-        telemetry.addData("Linearlift", linearLift.getCurrentPosition());
-        telemetry.addData("LinearliftPower", linearLiftPower);
+        telemetry.addData("linearLiftPower", linearLift.getPower());
+        telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
+        telemetry.addData("LinearLiftPower", linearLiftPower);
 
         if (linearLiftPower>.2)
             linearLift.setPower(1);
@@ -67,12 +71,7 @@ public class TwoPlayer extends DriveConstance{
         else
             linearLift.setPower(0);
 
-        /*if (gamepad2.a){
-
-            linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }*/
         crane.setPower(cranepower);
-
 
         if (liftUp)
             lift.setPower(1);
@@ -119,6 +118,7 @@ public class TwoPlayer extends DriveConstance{
             outtake.setPosition(1);
         else //if (outtakeClosed)
             outtake.setPosition(0);
+
 
     }
 }
