@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Switch{
     boolean placeHolder = false;
-    double Wait = 1;
+    double Wait = 1000;
     ElapsedTime timeOut = new ElapsedTime();
     public void changeBool(boolean gamepad){
         if (timeOut.milliseconds()>Wait)
@@ -23,7 +23,7 @@ public class Switch{
         placeHolder = initial;
     }
 
-    public void setWait(double wait){
-        wait = this.Wait;
+    public void setInputTimeOut(double Timeout){
+        Timeout = this.Wait;
     }
 }

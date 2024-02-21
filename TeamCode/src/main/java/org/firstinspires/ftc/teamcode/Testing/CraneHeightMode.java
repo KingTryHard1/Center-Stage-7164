@@ -12,6 +12,8 @@ public class CraneHeightMode extends DriveConstance {
         initRobot();
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         linearLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        crane.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
