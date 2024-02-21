@@ -48,13 +48,6 @@ public class TwoPlayer extends DriveConstance {
         boolean outtakeClosed = gamepad2.left_bumper;
         boolean outtakeOpen = gamepad2.right_bumper;
 
-        Switch test = new Switch();
-        if (test.returnBool())
-            craneStopper.setPosition(0);
-        else
-            craneStopper.setPosition(1);
-        test.changeBool(gamepad2.dpad_left);
-
         frontLeft.setPower(frontLeftPower);
         backLeft.setPower(backLeftPower);
         frontRight.setPower(frontRightPower);
@@ -86,17 +79,6 @@ public class TwoPlayer extends DriveConstance {
             planePush.setPosition(.4);
 
 
-        if (planepower) {
-            plane.setPower(.45);
-
-        }
-        else if (planepowerBlue){
-            plane.setPower(.6);
-        }
-        else {
-        plane.setPower(0);
-    }
-
         /*if (cranepower>0.1) {
             crane.setTargetPosition(craneHighestPosition);
             crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -113,12 +95,6 @@ public class TwoPlayer extends DriveConstance {
             crane.setPower(0);
 
          */
-
-        if (outtakeOpen)
-            outtake.setPosition(1);
-        else //if (outtakeClosed)
-            outtake.setPosition(0);
-
 
     }
 }

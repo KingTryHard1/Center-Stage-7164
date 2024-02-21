@@ -26,13 +26,9 @@ public abstract class DriveConstance extends OpMode {
     public DcMotorEx backRight;
 
     public DcMotorEx crane;
-    public Servo craneStopper;
     public DcMotorEx linearLift;
-    public DcMotorEx plane;
     public Servo planePush;
     public DcMotorEx lift;
-    public CRServo sweeper;
-    public Servo outtake;
 
     public int craneHighestPosition = -4200;
     public int linearLiftHighestPosition = -1400;
@@ -44,15 +40,10 @@ public abstract class DriveConstance extends OpMode {
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
-        craneStopper = hardwareMap.get(Servo.class,"craneStopper");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
 
-        plane = hardwareMap.get(DcMotorEx.class, "plane");
         planePush = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
-
-        sweeper = hardwareMap.get(CRServo.class, "sweeper");
-        outtake = hardwareMap.get(Servo.class, "outtake");
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -63,7 +54,6 @@ public abstract class DriveConstance extends OpMode {
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        plane.setDirection(DcMotorSimple.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
