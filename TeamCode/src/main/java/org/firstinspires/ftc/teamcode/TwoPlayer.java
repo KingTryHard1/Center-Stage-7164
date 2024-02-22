@@ -7,6 +7,8 @@ import org.firstinspires.ftc.teamcode.Testing.Switch;
 
 @TeleOp
 public class TwoPlayer extends DriveConstance {
+    Switch toggle = new Switch(false, 2000);
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -41,10 +43,6 @@ public class TwoPlayer extends DriveConstance {
             boolean liftUp = gamepad1.dpad_up;
             boolean liftDown = gamepad1.dpad_down;
 
-            boolean planepower = gamepad1.b;
-            boolean planepowerBlue = gamepad1.x;
-            boolean planePushBool = gamepad1.left_bumper;
-
             double cranepower = -gamepad2.right_stick_y;
 
             boolean outtakeClosed = gamepad2.left_bumper;
@@ -62,7 +60,7 @@ public class TwoPlayer extends DriveConstance {
             if (linearLiftPower>.2)
                 linearLift.setPower(1);
             else if (linearLiftPower<-.2)
-                linearLift.setPower(-.7);
+                linearLift.setPower(-1);
             else
                 linearLift.setPower(0);
 
@@ -75,10 +73,12 @@ public class TwoPlayer extends DriveConstance {
             else
                 lift.setPower(0);
 
-            if (planePushBool)
-                planePush.setPosition(0);
+            if (toggle.returnBool())
+                planeRelease.setPosition(1);
             else
-                planePush.setPosition(.4);
+                planeRelease.setPosition(0);
+
+            toggle.changeBool(gamepad1.a, gamepad1.b);
         }
 
     }

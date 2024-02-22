@@ -28,7 +28,7 @@ public abstract class DriveConstance extends LinearOpMode {
 
     public DcMotorEx crane;
     public DcMotorEx linearLift;
-    public Servo planePush;
+    public Servo planeRelease;
     public DcMotorEx lift;
 
     public int craneHighestPosition = -4200;
@@ -43,7 +43,7 @@ public abstract class DriveConstance extends LinearOpMode {
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
 
-        planePush = hardwareMap.get(Servo.class, "planePush");
+        planeRelease = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -51,11 +51,12 @@ public abstract class DriveConstance extends LinearOpMode {
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
+        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        crane.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -14,14 +14,18 @@ public class CraneHeightMode extends DriveConstance {
             linearLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             crane.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             crane.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         waitForStart();
         while (opModeIsActive()) {
             linearLift.setPower(gamepad2.right_stick_y);
             crane.setPower(gamepad2.left_stick_y);
+            lift.setPower(gamepad1.left_stick_y);
             telemetry.addData("Highest Position LINEARLIFT: ", linearLift.getCurrentPosition());
             telemetry.addData("Highest Position CRANE: ", crane.getCurrentPosition());
+            telemetry.addData("Highest Position LIFT: ", lift.getCurrentPosition());
             telemetry.update();
         }
 

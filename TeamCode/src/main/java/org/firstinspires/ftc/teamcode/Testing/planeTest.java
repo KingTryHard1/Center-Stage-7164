@@ -16,9 +16,9 @@ public class planeTest extends DriveConstance {
         waitForStart();
         while (opModeIsActive()) {
             if (toggle.returnBool())
-                planePush.setPosition(1);
+                planeRelease.setPosition(1);
             else
-                planePush.setPosition(0);
+                planeRelease.setPosition(0);
 
             toggle.changeBool(gamepad1.a, gamepad1.b);
         }
