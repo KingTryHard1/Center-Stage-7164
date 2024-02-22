@@ -20,8 +20,8 @@ public class Switch{
                 placeHolder = !placeHolder;
                 timeOut.reset();
             }
-
     }
+
     public void changeBool(boolean gamepad1, boolean gamepad2){
         if (timeOut.milliseconds()>Wait)
             if (gamepad1 && gamepad2) {

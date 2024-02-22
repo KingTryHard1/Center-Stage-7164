@@ -2,24 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Size;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Camera.Pipeline_Blue;
+import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
-public abstract class DriveConstance extends OpMode {
+public abstract class DriveConstance extends LinearOpMode {
     public AprilTagProcessor myAprilTagProcessor;
     public VisionPortal myVisionPortal;
+    public OpenCvCamera webcam;
     public DcMotorEx frontLeft;
     public DcMotorEx frontRight;
     public DcMotorEx backLeft;
@@ -63,7 +64,7 @@ public abstract class DriveConstance extends OpMode {
 
     }
 
-    public void initCam(){
+    public void initAprilTags(){
 
         myAprilTagProcessor = new AprilTagProcessor.Builder()
                 .setDrawTagID(true)
@@ -83,23 +84,56 @@ public abstract class DriveConstance extends OpMode {
 
     }
 
-    public void forward(int amount){
+    public void initOpenCV(Pipeline_Blue Pipeline_Blue){
 
-        frontLeft.setTargetPosition(amount);
-        frontRight.setTargetPosition(amount);
-        backLeft.setTargetPosition(amount);
-        backRight.setTargetPosition(amount);
+        int cameraMonitorViewId = hardwareMap.appContext
+                .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
+        webcam.setPipeline(Pipeline_Blue);
 
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+            }
 
-        frontLeft.setPower(-1);
-        frontRight.setPower(-1);
-        backLeft.setPower(-1);
-        backRight.setPower(-1);
+            @Override
+            public void onError(int errorCode) {
 
+            }
+        });
+
+    }
+    public void initOpenCV(Pipeline_Red Pipeline_Red){
+
+        int cameraMonitorViewId = hardwareMap.appContext
+                .getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
+        webcam.setPipeline(Pipeline_Red);
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
+    }
+
+    public void craneToPos(double power, int position) {
+        crane.setTargetPosition(position);
+        crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        crane.setPower(power);
+    }
+
+    public void linearLiftToPos(double power, int position) {
+        linearLift.setTargetPosition(position);
+        linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        linearLift.setPower(power);
     }
 }
 
