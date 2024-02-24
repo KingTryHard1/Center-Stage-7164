@@ -23,7 +23,7 @@ public class Pipeline_Blue extends OpenCvPipeline {
 
     static final Rect LEFT_ROI = new Rect(
             new Point(10, 330),
-            new Point(300, 830));*/
+            new Point(300, 830));
 
     static final Rect MID_ROI = new Rect(
             new Point(200, 330),
