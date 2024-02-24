@@ -21,19 +21,17 @@ public class Pipeline_Red extends OpenCvPipeline {
     }
     public Location location = Location.NOT_FOUND;
 
-    static final Rect MID_ROI = new Rect(
-            new Point(850, 330),
-            new Point(1240,450));
-
     static final Rect LEFT_ROI = new Rect(
+            new Point(10, 330),
+            new Point(300, 830));
+
+    static final Rect MID_ROI = new Rect(
             new Point(200, 330),
             new Point(650, 450));
 
-    /*static final Rect RIGHT_ROI = new Rect(
+    static final Rect RIGHT_ROI = new Rect(
             new Point(850, 330),
             new Point(1240,450));
-
-     */
 
     static double percentThreshold = 0.12;
 
@@ -67,13 +65,13 @@ public class Pipeline_Red extends OpenCvPipeline {
 
         Core.inRange(mat, redLowHSV, redHighHSV, mat);
 
-        //Mat left = mat.submat(LEFT_ROI);
-        Mat mid = mat.submat(MID_ROI);
         Mat left = mat.submat(LEFT_ROI);
+        Mat mid = mat.submat(MID_ROI);
+        Mat right = mat.submat(RIGHT_ROI);
 
         double leftValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 100;
         double midValue = Core.sumElems(mid).val[0] / MID_ROI.area() / 100;
-        //double rightValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 100;
+        double rightValue = Core.sumElems(right).val[0] / RIGHT_ROI.area() / 100;
 
         mid.release();
 
@@ -82,7 +80,7 @@ public class Pipeline_Red extends OpenCvPipeline {
 
         boolean tseLeft = leftValue > percentThreshold;
         boolean tseMid = midValue > percentThreshold;
-        //boolean tseRight = rightValue > percentThreshold;
+        boolean tseRight = rightValue > percentThreshold;
 
         if (tseLeft){
             location = Location.LEFT;
@@ -90,11 +88,9 @@ public class Pipeline_Red extends OpenCvPipeline {
         }else if (tseMid){
             location = Location.MIDDLE;
             telemetry.addData("Location", "Middle");
-        /*}else if (tseRight) {
+        }else if (tseRight) {
             location = Location.RIGHT;
             telemetry.addData("Location", "Right");
-
-         */
         }else{
             location = Location.NOT_FOUND;
             telemetry.addData("Location", "not found");
@@ -105,9 +101,9 @@ public class Pipeline_Red extends OpenCvPipeline {
 
         Scalar tseColor = new Scalar(255,0,0);
 
-        //Imgproc.rectangle(mat, LEFT_ROI, tseColor);
-        Imgproc.rectangle(mat, MID_ROI, tseColor);
         Imgproc.rectangle(mat, LEFT_ROI, tseColor);
+        Imgproc.rectangle(mat, MID_ROI, tseColor);
+        Imgproc.rectangle(mat, RIGHT_ROI, tseColor);
         return mat;
     }
     public Location getLocation() {
