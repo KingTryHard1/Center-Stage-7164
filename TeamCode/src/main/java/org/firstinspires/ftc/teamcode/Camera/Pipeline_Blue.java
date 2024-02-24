@@ -21,7 +21,7 @@ public class Pipeline_Blue extends OpenCvPipeline {
     }
     public Location location = Location.NOT_FOUND;
 
-    /*static final Rect LEFT_ROI = new Rect(
+    static final Rect LEFT_ROI = new Rect(
             new Point(10, 330),
             new Point(300, 830));*/
 
@@ -65,11 +65,11 @@ public class Pipeline_Blue extends OpenCvPipeline {
 
         Core.inRange(mat, blueLowHSV, blueHighHSV, mat);
 
-        //Mat left = mat.submat(LEFT_ROI);
+        Mat left = mat.submat(LEFT_ROI);
         Mat mid = mat.submat(MID_ROI);
         Mat right = mat.submat(RIGHT_ROI);
 
-        //double leftValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 100;
+        double leftValue = Core.sumElems(left).val[0] / LEFT_ROI.area() / 100;
         double midValue = Core.sumElems(mid).val[0] / MID_ROI.area() / 100;
         double rightValue = Core.sumElems(right).val[0] / RIGHT_ROI.area() / 100;
 
@@ -79,14 +79,14 @@ public class Pipeline_Blue extends OpenCvPipeline {
         telemetry.addData("Mid percentage", Math.round(midValue * 100) + "%");
         telemetry.addData("Right percentage", Math.round(rightValue * 100) + "%");
 
-        //boolean tseLeft = leftValue > percentThreshold;
+        boolean tseLeft = leftValue > percentThreshold;
         boolean tseMid = midValue > percentThreshold;
         boolean tseRight = rightValue > percentThreshold;
 
-        /*if (tseLeft){
+        if (tseLeft){
             location = Location.LEFT;
             telemetry.addData("Location", "Left");
-        } else*/ if (tseMid){
+        } else if (tseMid){
             location = Location.MIDDLE;
             telemetry.addData("Location", "Middle");
         }else if (tseRight) {
@@ -102,7 +102,7 @@ public class Pipeline_Blue extends OpenCvPipeline {
 
         Scalar tseColor = new Scalar(255,0,0);
 
-        // Imgproc.rectangle(mat, LEFT_ROI, tseColor);
+        Imgproc.rectangle(mat, LEFT_ROI, tseColor);
         Imgproc.rectangle(mat, MID_ROI, tseColor);
         Imgproc.rectangle(mat, RIGHT_ROI, tseColor);
         return mat;
