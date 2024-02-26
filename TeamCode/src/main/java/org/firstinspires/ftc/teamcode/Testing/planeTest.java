@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.DriveConstance;
 
 @TeleOp
 public class planeTest extends DriveConstance {
-    Switch toggle = new Switch(false, 2000);
+    toggleBool toggle = new toggleBool(false, 2000);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -15,12 +15,10 @@ public class planeTest extends DriveConstance {
 
         waitForStart();
         while (opModeIsActive()) {
-            if (toggle.returnBool())
+            if (toggle.flipAndReturnBool(gamepad1.a, gamepad1.b))
                 planeRelease.setPosition(1);
             else
                 planeRelease.setPosition(0);
-
-            toggle.changeBool(gamepad1.a, gamepad1.b);
         }
     }
 }
