@@ -2,12 +2,15 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Testing.Switch;
+import org.firstinspires.ftc.teamcode.Testing.toggleBool;
 
 @TeleOp
 public class TwoPlayer extends DriveConstance {
-    Switch toggle = new Switch(false, 2000);
+
+    ElapsedTime ReturnPlane = new ElapsedTime();
+     toggleBool toggle = new toggleBool(false, 2000);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -73,13 +76,19 @@ public class TwoPlayer extends DriveConstance {
             else
                 lift.setPower(0);
 
-            if (toggle.returnBool())
+            if (toggle.flipAndReturnBool(gamepad1.a))
                 planeRelease.setPosition(1);
             else
                 planeRelease.setPosition(0);
 
-            toggle.changeBool(gamepad1.a, gamepad1.b);
-        }
+            if (toggle.returnBool()) {
+                ReturnPlane.reset();
+                if (ReturnPlane.seconds() >= 5)
+                    toggle.flipBool();
+            }
 
+            telemetry.addData("Time:", ReturnPlane.seconds());
+
+        }
     }
 }
