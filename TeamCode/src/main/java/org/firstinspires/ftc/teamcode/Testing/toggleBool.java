@@ -34,10 +34,7 @@ public class toggleBool{
     }
 
     public void flipBool(){
-        if (timeOut.milliseconds()>wait) {
-            bool = !bool;
-            timeOut.reset();
-        }
+        bool = !bool;
     }
 
     public void flipBool(boolean gamepad1, boolean gamepad2){

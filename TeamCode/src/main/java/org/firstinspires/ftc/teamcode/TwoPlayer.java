@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.Testing.toggleBool;
 @TeleOp
 public class TwoPlayer extends DriveConstance {
 
-    ElapsedTime ReturnPlane = new ElapsedTime();
+     ElapsedTime ReturnPlane = new ElapsedTime();
      toggleBool toggle = new toggleBool(false, 2000);
 
     @Override
@@ -60,12 +60,12 @@ public class TwoPlayer extends DriveConstance {
             telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
             telemetry.addData("LinearLiftPower", linearLiftPower);
 
-            if (linearLiftPower>.2)
-                linearLift.setPower(1);
-            else if (linearLiftPower<-.2)
-                linearLift.setPower(-1);
-            else
-                linearLift.setPower(0);
+            //if (linearLiftPower>.2)
+                linearLift.setPower(linearLiftPower);
+            //else if (linearLiftPower<-.2)
+                //linearLift.setPower(-1);
+            //else
+                //linearLift.setPower(0);
 
             crane.setPower(cranepower);
 
@@ -76,18 +76,26 @@ public class TwoPlayer extends DriveConstance {
             else
                 lift.setPower(0);
 
-            if (toggle.flipAndReturnBool(gamepad1.a))
-                planeRelease.setPosition(1);
-            else
+            if (!toggle.flipAndReturnBool(gamepad1.a)) {
                 planeRelease.setPosition(0);
-
-            if (toggle.returnBool()) {
                 ReturnPlane.reset();
-                if (ReturnPlane.seconds() >= 5)
-                    toggle.flipBool();
+            }
+            else {
+                planeRelease.setPosition(1);
             }
 
+
+            if (toggle.returnBool())
+                if (ReturnPlane.seconds()>=3) {
+                    toggle.flipBool();
+                    ReturnPlane.reset();
+                }
+
+
             telemetry.addData("Time:", ReturnPlane.seconds());
+            telemetry.update();
+
+
 
         }
     }
