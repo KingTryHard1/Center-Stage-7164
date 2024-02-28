@@ -28,6 +28,7 @@ public abstract class DriveConstance extends LinearOpMode {
 
     public DcMotorEx crane;
     public DcMotorEx linearLift;
+    public Servo Claw;
     public Servo planeRelease;
     public DcMotorEx lift;
 
@@ -42,6 +43,7 @@ public abstract class DriveConstance extends LinearOpMode {
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
+        Claw = hardwareMap.get(Servo.class, "Claw");
 
         planeRelease = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
@@ -62,6 +64,20 @@ public abstract class DriveConstance extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
+    public void initAutoRobot(){
+        crane = hardwareMap.get(DcMotorEx.class, "crane");
+        linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
+
+        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        crane.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
