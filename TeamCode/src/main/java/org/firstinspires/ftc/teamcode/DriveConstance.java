@@ -28,7 +28,8 @@ public abstract class DriveConstance extends LinearOpMode {
 
     public DcMotorEx crane;
     public DcMotorEx linearLift;
-    public Servo Claw;
+    public Servo claw;
+    public Servo clawFlip;
     public Servo planeRelease;
     public DcMotorEx lift;
 
@@ -43,7 +44,8 @@ public abstract class DriveConstance extends LinearOpMode {
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
-        Claw = hardwareMap.get(Servo.class, "Claw");
+        claw = hardwareMap.get(Servo.class, "Claw");
+        clawFlip = hardwareMap.get(Servo.class, "clawFlip");
 
         planeRelease = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
@@ -53,7 +55,7 @@ public abstract class DriveConstance extends LinearOpMode {
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        linearLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
         crane.setDirection(DcMotorSimple.Direction.REVERSE);
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
 

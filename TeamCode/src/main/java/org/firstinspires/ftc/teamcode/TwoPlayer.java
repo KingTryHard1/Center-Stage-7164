@@ -48,13 +48,25 @@ public class TwoPlayer extends DriveConstance {
 
             double cranepower = -gamepad2.right_stick_y;
 
-            boolean outtakeClosed = gamepad2.left_bumper;
+            boolean outtakeClose = gamepad2.left_bumper;
             boolean outtakeOpen = gamepad2.right_bumper;
+            boolean clawUp = gamepad2.dpad_up;
+            boolean clawDown = gamepad2.dpad_down;
 
             frontLeft.setPower(frontLeftPower);
             backLeft.setPower(backLeftPower);
             frontRight.setPower(frontRightPower);
             backRight.setPower(backRightPower);
+
+            if (outtakeClose)
+                claw.setPosition(0.05);
+            else if (outtakeOpen)
+                claw.setPosition(.5);
+
+            if (clawUp)
+                clawFlip.setPosition(1);
+            if (clawDown)
+                clawFlip.setPosition(.05);
 
             telemetry.addData("linearLiftPower", linearLift.getPower());
             telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
