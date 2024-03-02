@@ -33,8 +33,8 @@ public abstract class DriveConstance extends LinearOpMode {
     public Servo planeRelease;
     public DcMotorEx lift;
 
-    public int craneHighestPosition = -4200;
-    public int linearLiftHighestPosition = -1400;
+    public int craneHighestPosition = 4250;
+    public int linearLiftHighestPosition = -5000;
 
     public void initRobot(){
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");

@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -7,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.teamcode.Auto.RR.Drawing;
 import org.firstinspires.ftc.teamcode.Auto.RR.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Testing.toggleBool;
 
@@ -18,6 +21,7 @@ public class TwoPlayer extends DriveConstance {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(61,10, 0));
 
         if (opModeInInit()) {
             initRobot();
@@ -32,18 +36,6 @@ public class TwoPlayer extends DriveConstance {
 
         waitForStart();
         while (opModeIsActive()){
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x; // *1.1 Counteract imperfect strafing
-            double rx = gamepad1.right_stick_x;
-
-            // Denominator is the largest motor power (absolute value) or 1
-            // This ensures all the powers maintain the same ratio,
-            // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-            double frontLeftPower = (y + x + rx) / denominator;
-            double backLeftPower = (y - x + rx) / denominator;
-            double frontRightPower = (y - x - rx) / denominator;
-            double backRightPower = (y + x - rx) / denominator;
 
             double linearLiftPower = gamepad2.left_stick_y;
 
@@ -57,33 +49,54 @@ public class TwoPlayer extends DriveConstance {
             boolean clawUp = gamepad2.dpad_up;
             boolean clawDown = gamepad2.dpad_down;
 
-            frontLeft.setPower(frontLeftPower);
-            backLeft.setPower(backLeftPower);
-            frontRight.setPower(frontRightPower);
-            backRight.setPower(backRightPower);
+            drive.setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x
+                    ),
+                    -gamepad1.right_stick_x
+            ));
+
+            drive.updatePoseEstimate();
+
+            TelemetryPacket packet = new TelemetryPacket();
+            packet.fieldOverlay().setStroke("#3F51B5");
+            Drawing.drawRobot(packet.fieldOverlay(), drive.pose);
+            FtcDashboard.getInstance().sendTelemetryPacket(packet);
+
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
 
             if (outtakeClose)
                 claw.setPosition(0.05);
             else if (outtakeOpen)
                 claw.setPosition(.5);
 
+            telemetry.addData("outtakeClose:", outtakeClose);
+            telemetry.addData("outtakeOpen:", outtakeOpen);
+
             if (clawUp)
                 clawFlip.setPosition(1);
             if (clawDown)
-                clawFlip.setPosition(.05);
+                clawFlip.setPosition(0);
 
             telemetry.addData("linearLiftPower", linearLift.getPower());
             telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
             telemetry.addData("LinearLiftPower", linearLiftPower);
 
-            //if (linearLiftPower>.2)
-                linearLift.setPower(linearLiftPower);
-            //else if (linearLiftPower<-.2)
-                //linearLift.setPower(-1);
-            //else
-                //linearLift.setPower(0);
+            linearLift.setPower(linearLiftPower);
 
-            crane.setPower(cranepower);
+            if (cranepower>0.1) {
+                crane.setTargetPosition(craneHighestPosition);
+                crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                crane.setPower(cranepower);
+            }else if (cranepower<-0.1){
+                crane.setTargetPosition(0);
+                crane.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                crane.setPower(cranepower);
+            }else
+                crane.setPower(0);
 
             if (liftUp)
                 lift.setPower(1);
@@ -92,7 +105,7 @@ public class TwoPlayer extends DriveConstance {
             else
                 lift.setPower(0);
 
-            if (!toggle.flipAndReturnBool(gamepad1.a)) {
+            if (!toggle.flipAndReturnBool(gamepad1.b)) {
                 planeRelease.setPosition(0);
                 ReturnPlane.reset();
             }
@@ -106,7 +119,6 @@ public class TwoPlayer extends DriveConstance {
                     toggle.flipBool();
                     ReturnPlane.reset();
                 }
-
 
             telemetry.addData("Time:", ReturnPlane.seconds());
             telemetry.update();

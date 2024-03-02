@@ -5,11 +5,15 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.Auto.RR.MecanumDrive;
-import org.firstinspires.ftc.teamcode.Camera.Pipeline_Blue;
+import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.firstinspires.ftc.teamcode.DriveConstance;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
+@Autonomous
 public class redLeft extends DriveConstance {
 
     double teamElementPos;
@@ -17,8 +21,20 @@ public class redLeft extends DriveConstance {
     @Override
     public void runOpMode() throws InterruptedException {
         initOpenCV();
-        Pipeline_Blue detector = new Pipeline_Blue(telemetry);
+        Pipeline_Red detector = new Pipeline_Red(telemetry);
         webcam.setPipeline(detector);
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(1280, 960, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+
+            }
+        });
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(10, -61, Math.toRadians(90)));
 
@@ -76,9 +92,8 @@ public class redLeft extends DriveConstance {
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();
 
-
         waitForStart();
-        if (opModeIsActive()){
+        if (opModeIsActive()) {
             switch (detector.getLocation()) {
                 case LEFT:
                     teamElementPos = 1;
@@ -93,12 +108,30 @@ public class redLeft extends DriveConstance {
                     teamElementPos = 1;//should be 4
                     break;
             }
+        }
 
             telemetry.addData("teamElementPos", teamElementPos);
 
-            Actions.runBlocking(
-                    new SequentialAction(Left)
-            );
-        }
+            if (opModeIsActive()) {
+                if (teamElementPos == 1) {
+                    Actions.runBlocking(
+                            new SequentialAction(Left)
+                    );
+                }
+            }
+
+            /*if (teamElementPos == 2) {
+                Actions.runBlocking(
+                        new SequentialAction(Middle)
+                );
+            }
+            if (teamElementPos == 3) {
+                Actions.runBlocking(
+                        new SequentialAction(Right)
+                );
+            }
+
+             */
+
     }
 }

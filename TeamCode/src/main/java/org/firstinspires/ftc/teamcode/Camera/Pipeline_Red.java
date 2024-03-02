@@ -22,12 +22,12 @@ public class Pipeline_Red extends OpenCvPipeline {
     public Location location = Location.NOT_FOUND;
 
     static final Rect LEFT_ROI = new Rect(
-            new Point(10, 330),
-            new Point(300, 830));
+            new Point(10, 10),
+            new Point(500, 960));
 
     static final Rect MID_ROI = new Rect(
-            new Point(200, 330),
-            new Point(650, 450));
+            new Point(600, 10),
+            new Point(1200, 960));
 
     static final Rect RIGHT_ROI = new Rect(
             new Point(850, 330),
