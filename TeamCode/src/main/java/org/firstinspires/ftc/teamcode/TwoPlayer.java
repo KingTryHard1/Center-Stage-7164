@@ -32,6 +32,9 @@ public class TwoPlayer extends DriveConstance {
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+            linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            linearLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         }
 
         waitForStart();
@@ -76,14 +79,25 @@ public class TwoPlayer extends DriveConstance {
             telemetry.addData("outtakeClose:", outtakeClose);
             telemetry.addData("outtakeOpen:", outtakeOpen);
 
-            if (clawUp)
+            /*if (clawUp)
                 clawFlip.setPosition(1);
             if (clawDown)
                 clawFlip.setPosition(0);
 
+             */
+
             telemetry.addData("linearLiftPower", linearLift.getPower());
             telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
             telemetry.addData("LinearLiftPower", linearLiftPower);
+
+            if (linearLift.getCurrentPosition()<linearLiftHighestPosition/1.7)
+                clawFlip.setPosition((double) linearLift.getCurrentPosition() / linearLiftHighestPosition);
+            else
+                clawFlip.setPosition(0);
+            /*if (clawUp)
+                clawFlip.setPosition(1);
+            if (clawDown)
+                clawFlip.setPosition(0);*/
 
             linearLift.setPower(linearLiftPower);
 

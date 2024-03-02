@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class linearLift {
+    int Pos;
     private DcMotorEx linearLift;
 
     public linearLift(HardwareMap hardwareMap) {
@@ -18,24 +19,18 @@ public class linearLift {
         linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public class CloseClaw implements Action {
+    public class linearLiftToPos implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
+            linearLift.setTargetPosition(Pos);
+            linearLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            linearLift.setPower(1);
             return false;
         }
     }
-    public Action closeClaw() {
-        return new linearLift.CloseClaw();
-    }
-    public class OpenClaw implements Action {
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-
-            return false;
-        }
-    }
-    public Action openClaw() {
-        return new linearLift.OpenClaw();
+    public Action linearLiftToPos(int toPos) {
+        Pos = toPos;
+        return new linearLift.linearLiftToPos();
     }
 }
 
