@@ -42,15 +42,8 @@ public class redLeft extends DriveConstance {
                 .setTangent(Math.toRadians(60))
                 .splineToSplineHeading(new Pose2d(10, -29, Math.toRadians(180)), Math.PI / 2)
                 .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(38, -33), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(38, -32), Math.toRadians(0))
                 .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -40), Math.toRadians(-90))
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();
@@ -59,16 +52,8 @@ public class redLeft extends DriveConstance {
                 .setTangent(Math.toRadians(0))
                 .lineToX(20)
                 .setTangent(Math.toRadians(40))
-                .splineToConstantHeading(new Vector2d(13, -33), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(13, -36), Math.toRadians(0))
                 .lineToXSplineHeading(38, Math.toRadians(180))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -40), Math.toRadians(-90))
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();
@@ -81,13 +66,6 @@ public class redLeft extends DriveConstance {
                 .setTangent(Math.toRadians(0))
                 .splineToSplineHeading(new Pose2d(38, -40, Math.toRadians(180)), Math.toRadians(90))
                 .setTangent(Math.toRadians(45))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -30), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, -9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, -30), Math.toRadians(-90))
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();
@@ -98,10 +76,10 @@ public class redLeft extends DriveConstance {
                 case LEFT:
                     teamElementPos = 1;
                     break;
-                case RIGHT:
+                case MIDDLE:
                     teamElementPos = 2;
                     break;
-                case MIDDLE:
+                case RIGHT:
                     teamElementPos = 3;
                     break;
                 case NOT_FOUND:
@@ -109,8 +87,6 @@ public class redLeft extends DriveConstance {
                     break;
             }
         }
-
-            telemetry.addData("teamElementPos", teamElementPos);
 
             if (opModeIsActive()) {
                 if (teamElementPos == 1) {
@@ -120,7 +96,7 @@ public class redLeft extends DriveConstance {
                 }
             }
 
-            /*if (teamElementPos == 2) {
+            if (teamElementPos == 2) {
                 Actions.runBlocking(
                         new SequentialAction(Middle)
                 );
@@ -130,8 +106,6 @@ public class redLeft extends DriveConstance {
                         new SequentialAction(Right)
                 );
             }
-
-             */
 
     }
 }
