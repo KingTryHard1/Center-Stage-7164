@@ -9,7 +9,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class BlueClose {
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(900);
+        MeepMeep meepMeep = new MeepMeep(650);
 
         Pose2d startPose = new Pose2d(10, 61, Math.toRadians(-90));
 
@@ -31,65 +31,42 @@ public class BlueClose {
                 .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 18)
                 .build();
 
-        Left.runAction(Left.getDrive().actionBuilder(startPose)
-                .setTangent(Math.toRadians(60))
-                .splineToSplineHeading(new Pose2d(10, 29, Math.toRadians(-180)), Math.PI / 2)
+        Right.runAction(Right.getDrive().actionBuilder(startPose)
+                .setTangent(Math.toRadians(-90))
+                .splineToSplineHeading(new Pose2d(10, 29, Math.toRadians(-180)), Math.toRadians(-120))
                 .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(38, 33), Math.toRadians(0))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(38, 30), Math.toRadians(0))
+                .setTangent(Math.toRadians(-100))
                 .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(0))
                 .build());
 
         Middle.runAction(Middle.getDrive().actionBuilder(startPose)
                 .setTangent(Math.toRadians(0))
                 .lineToX(20)
-                .setTangent(Math.toRadians(40))
-                .splineToConstantHeading(new Vector2d(13, 33), Math.toRadians(0))
+                .setTangent(Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(13, 34), Math.toRadians(0))
+                .setTangent(Math.toRadians(1))
                 .lineToXSplineHeading(38, Math.toRadians(180))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 40), Math.toRadians(-90))
-                .setTangent(Math.toRadians(90))
+                .setTangent(Math.toRadians(-90))
                 .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(0))
                 .build());
 
-        Right.runAction(Right.getDrive().actionBuilder(startPose)
-                .setTangent(Math.toRadians(50))
-                .splineToLinearHeading(new Pose2d(13, 32, Math.toRadians(0)), Math.toRadians(90))
-                .setTangent(Math.toRadians(-90))
+        Left.runAction(Left.getDrive().actionBuilder(startPose)
+                .setTangent(Math.toRadians(-80))
+                .splineToLinearHeading(new Pose2d(13, 32, Math.toRadians(0)), Math.toRadians(-90))
+                .setTangent(Math.toRadians(110))
                 .splineToSplineHeading(new Pose2d(25,48, Math.toRadians(-90)), Math.toRadians(0))
                 .setTangent(Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(38, 40, Math.toRadians(-180)), Math.toRadians(90))
-                .setTangent(Math.toRadians(45))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 30), Math.toRadians(-90))
-                .setTangent(Math.toRadians(60))
-                .splineToConstantHeading(new Vector2d(-8, 9), Math.toRadians(180))
-                .setTangent(Math.toRadians(20))
-                .splineToConstantHeading(new Vector2d(40, 30), Math.toRadians(-90))
-                .setTangent(Math.toRadians(90))
+                .splineToSplineHeading(new Pose2d(38, 40, Math.toRadians(-180)), Math.toRadians(-90))
+                .setTangent(Math.toRadians(-91))
                 .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(0))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(Right)
-                .addEntity(Left)
+                //.addEntity(Right)
+                //.addEntity(Left)
                 .addEntity(Middle)
                 .start();
     }
