@@ -12,20 +12,20 @@ import org.firstinspires.ftc.teamcode.Auto.Actions.clawFlip;
 import org.firstinspires.ftc.teamcode.Auto.Actions.crane;
 import org.firstinspires.ftc.teamcode.Auto.Actions.linearLift;
 import org.firstinspires.ftc.teamcode.Auto.RR.MecanumDrive;
-import org.firstinspires.ftc.teamcode.Camera.Pipeline_Blue;
+import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.firstinspires.ftc.teamcode.DriveConstance;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous
-public class blueClose extends DriveConstance {
+public class redFar extends DriveConstance {
 
     double teamElementPos;
 
     @Override
     public void runOpMode() throws InterruptedException {
         initOpenCV();
-        Pipeline_Blue detector = new Pipeline_Blue(telemetry);
+        Pipeline_Red detector = new Pipeline_Red(telemetry);
         webcam.setPipeline(detector);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
@@ -40,53 +40,34 @@ public class blueClose extends DriveConstance {
             }
         });
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(10, 61, Math.toRadians(-90)));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-33, -61, Math.toRadians(90)));
         Claw claw = new Claw(hardwareMap);
-        org.firstinspires.ftc.teamcode.Auto.Actions.clawFlip clawFlip = new clawFlip(hardwareMap);
-        org.firstinspires.ftc.teamcode.Auto.Actions.linearLift linearLift = new linearLift(hardwareMap);
-        org.firstinspires.ftc.teamcode.Auto.Actions.crane crane = new crane(hardwareMap);
+        clawFlip clawFlip = new clawFlip(hardwareMap);
+        linearLift linearLift = new linearLift(hardwareMap);
+        crane crane = new crane(hardwareMap);
 
         Action Left = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(-80))
-                .splineToLinearHeading(new Pose2d(13, 32, Math.toRadians(0)), Math.toRadians(-90))
-                .setTangent(Math.toRadians(110))
-                .splineToSplineHeading(new Pose2d(25,48, Math.toRadians(-90)), Math.toRadians(0))
-                .setTangent(Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(38, 40, Math.toRadians(-180)), Math.toRadians(-90))
-                .setTangent(Math.toRadians(-91))
-                .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(0))
+                .setTangent(Math.toRadians(150))
+                .splineToLinearHeading(new Pose2d(-37, -29, Math.toRadians(180)), Math.toRadians(80))
+                .waitSeconds(1)
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
                 .build();
 
         Action Middle = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(20, 61), Math.toRadians(0))
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(13, 34), Math.toRadians(0))
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(13, 28), Math.toRadians(-90))
-                .waitSeconds(.5)
-                .stopAndAdd(linearLift.linearLiftToPos(-3000))
-                .stopAndAdd(crane.craneToPos(500))
-                .stopAndAdd(clawFlip.clawFlipBack())
-                .waitSeconds(3)
-                .setTangent(Math.toRadians(0))
-                .lineToXSplineHeading(45, Math.toRadians(180))
-                .waitSeconds(.5)
+                .setTangent(Math.toRadians(110))
+                .splineToConstantHeading(new Vector2d(-40, -31), Math.toRadians(60))
+                .waitSeconds(1)
                 .stopAndAdd(claw.openClaw())
-                .waitSeconds(.5)
-                .setTangent(Math.toRadians(-120))
-                .stopAndAdd(linearLift.linearLiftToPos(0))
-                .stopAndAdd(crane.craneToPos(0))
-                .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(10))
+                .waitSeconds(1)
                 .build();
 
         Action Right = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(-90))
-                .splineToSplineHeading(new Pose2d(10, 29, Math.toRadians(-180)), Math.toRadians(-120))
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(38, 30), Math.toRadians(0))
-                .setTangent(Math.toRadians(-100))
-                .splineToConstantHeading(new Vector2d(61,10), Math.toRadians(0))
+                .setTangent(Math.toRadians(110))
+                .splineToSplineHeading(new Pose2d(-33, -29, Math.toRadians(0)), Math.toRadians(0))
+                .waitSeconds(1)
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
                 .build();
 
         waitForStart();

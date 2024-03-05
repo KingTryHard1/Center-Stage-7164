@@ -7,6 +7,10 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.Auto.Actions.Claw;
+import org.firstinspires.ftc.teamcode.Auto.Actions.clawFlip;
+import org.firstinspires.ftc.teamcode.Auto.Actions.crane;
+import org.firstinspires.ftc.teamcode.Auto.Actions.linearLift;
 import org.firstinspires.ftc.teamcode.Auto.RR.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Camera.Pipeline_Red;
 import org.firstinspires.ftc.teamcode.DriveConstance;
@@ -37,13 +41,29 @@ public class redLeft extends DriveConstance {
         });
 
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(10, -61, Math.toRadians(90)));
+        Claw claw = new Claw(hardwareMap);
+        clawFlip clawFlip = new clawFlip(hardwareMap);
+        linearLift linearLift = new linearLift(hardwareMap);
+        crane crane = new crane(hardwareMap);
 
         Action Left = drive.actionBuilder(drive.pose)
+                .stopAndAdd(claw.closeClaw())
+                .stopAndAdd(clawFlip.clawFlipBack())
+                .waitSeconds(1)
                 .setTangent(Math.toRadians(60))
                 .splineToSplineHeading(new Pose2d(10, -29, Math.toRadians(180)), Math.PI / 2)
+                .stopAndAdd(clawFlip.clawFlipForward())
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
+                .stopAndAdd(claw.closeClaw())
+                .waitSeconds(1)
+                .stopAndAdd(clawFlip.clawFlipBack())
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(38, -32), Math.toRadians(0))
-                .setTangent(Math.toRadians(60))
+                .stopAndAdd(linearLift.linearLiftToPos(-4000))
+                .stopAndAdd(crane.craneToPos(1200))
+                .waitSeconds(3)
+                .stopAndAdd(claw.openClaw())
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();

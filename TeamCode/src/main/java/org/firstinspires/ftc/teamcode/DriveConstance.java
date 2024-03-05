@@ -57,7 +57,7 @@ public abstract class DriveConstance extends LinearOpMode {
 
         linearLift.setDirection(DcMotorSimple.Direction.REVERSE);
         crane.setDirection(DcMotorSimple.Direction.REVERSE);
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         crane.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
