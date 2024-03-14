@@ -22,8 +22,10 @@ public class CustomSplineTest extends LinearOpMode {
                             .splineTo(new Vector2d(30, 30), Math.PI / 2)
                             .splineTo(new Vector2d(0, 60), Math.PI)
                             .waitSeconds(1)
-                            .splineTo(new Vector2d(30, 30), Math.PI / 2)
-                            .splineTo(new Vector2d(0,0), Math.PI)
+                            .setTangent(0)
+                            .splineTo(new Vector2d(30, 30), -(Math.PI /2))
+                            .splineTo(new Vector2d(0,0), -(Math.PI))
+                            .waitSeconds(1)
                             .build());
         } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
             TankDrive drive = new TankDrive(hardwareMap, beginPose);
