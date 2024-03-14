@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Auto.RR.Drawing;
@@ -34,6 +35,8 @@ public class TwoPlayer extends DriveConstance {
 
             linearLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             linearLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+            clawFlip.setDirection(Servo.Direction.FORWARD);
 
         }
 
@@ -72,9 +75,9 @@ public class TwoPlayer extends DriveConstance {
             telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
 
             if (outtakeClose)
-                claw.setPosition(0.05);
+                claw.setPosition(0);
             else if (outtakeOpen)
-                claw.setPosition(.5);
+                claw.setPosition(.4);
 
             telemetry.addData("outtakeClose:", outtakeClose);
             telemetry.addData("outtakeOpen:", outtakeOpen);
@@ -90,14 +93,12 @@ public class TwoPlayer extends DriveConstance {
             telemetry.addData("LinearLiftPos", linearLift.getCurrentPosition());
             telemetry.addData("LinearLiftPower", linearLiftPower);
 
-            if (linearLift.getCurrentPosition()<linearLiftHighestPosition/1.7)
-                clawFlip.setPosition((double) linearLift.getCurrentPosition() / linearLiftHighestPosition);
-            else
-                clawFlip.setPosition(0);
-            /*if (clawUp)
+            if (linearLift.getCurrentPosition()<linearLiftHighestPosition/2)
+                clawFlip.setPosition(((double) linearLift.getCurrentPosition() / linearLiftHighestPosition)/gamepad2.right_trigger);
+            else if (clawUp && claw.getPosition() == 0)
                 clawFlip.setPosition(1);
-            if (clawDown)
-                clawFlip.setPosition(0);*/
+            if (clawDown && claw.getPosition() == 0)
+                clawFlip.setPosition(0);
 
             linearLift.setPower(linearLiftPower);
 

@@ -7,31 +7,31 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class Claw {
-    private Servo claw;
+public class clawFlip {
+    private Servo clawflip;
 
-    public Claw(HardwareMap hardwareMap) {
-        claw = hardwareMap.get(Servo.class, "Claw");
+    public clawFlip(HardwareMap hardwareMap) {
+        clawflip = hardwareMap.get(Servo.class, "clawFlip");
     }
 
-    public class CloseClaw implements Action {
+    public class ClawFlipForward implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(0);
+            clawflip.setPosition(0);
             return false;
         }
     }
-    public Action closeClaw() {
-        return new CloseClaw();
+    public Action clawFlipForward() {
+        return new ClawFlipForward();
     }
-    public class OpenClaw implements Action {
+    public class ClawFlipBack implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            claw.setPosition(.4);
+            clawflip.setPosition(.7);
             return false;
         }
     }
-    public Action openClaw() {
-        return new OpenClaw();
+    public Action clawFlipBack() {
+        return new ClawFlipBack();
     }
 }

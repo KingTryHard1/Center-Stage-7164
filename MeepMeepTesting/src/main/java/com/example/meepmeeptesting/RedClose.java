@@ -9,7 +9,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class RedClose {
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(900);
+        MeepMeep meepMeep = new MeepMeep(650);
 
         Pose2d startPose = new Pose2d(10, -61, Math.toRadians(90));
 
@@ -34,9 +34,10 @@ public class RedClose {
         Left.runAction(Left.getDrive().actionBuilder(startPose)
                 .setTangent(Math.toRadians(60))
                 .splineToSplineHeading(new Pose2d(10, -29, Math.toRadians(180)), Math.PI / 2)
+                        .setTangent(Math.toRadians(0))
+                .lineToX(4)
                 .setTangent(Math.toRadians(0))
                 .splineToConstantHeading(new Vector2d(38, -32), Math.toRadians(0))
-                .setTangent(Math.toRadians(60))
                 .setTangent(Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build());
@@ -67,8 +68,8 @@ public class RedClose {
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 //.addEntity(Right)
-                //.addEntity(Left)
-                .addEntity(Middle)
+                .addEntity(Left)
+                //.addEntity(Middle)
                 .start();
     }
 }

@@ -18,7 +18,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous
-public class redLeft extends DriveConstance {
+public class redFar extends DriveConstance {
 
     double teamElementPos;
 
@@ -40,54 +40,34 @@ public class redLeft extends DriveConstance {
             }
         });
 
-        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(10, -61, Math.toRadians(90)));
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(-33, -61, Math.toRadians(90)));
         Claw claw = new Claw(hardwareMap);
         clawFlip clawFlip = new clawFlip(hardwareMap);
         linearLift linearLift = new linearLift(hardwareMap);
         crane crane = new crane(hardwareMap);
 
         Action Left = drive.actionBuilder(drive.pose)
-                .stopAndAdd(claw.closeClaw())
-                .stopAndAdd(clawFlip.clawFlipBack())
+                .setTangent(Math.toRadians(150))
+                .splineToLinearHeading(new Pose2d(-37, -29, Math.toRadians(180)), Math.toRadians(80))
                 .waitSeconds(1)
-                .setTangent(Math.toRadians(60))
-                .splineToSplineHeading(new Pose2d(10, -29, Math.toRadians(180)), Math.PI / 2)
-                .stopAndAdd(clawFlip.clawFlipForward())
                 .stopAndAdd(claw.openClaw())
                 .waitSeconds(1)
-                .stopAndAdd(claw.closeClaw())
-                .waitSeconds(1)
-                .stopAndAdd(clawFlip.clawFlipBack())
-                .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(38, -32), Math.toRadians(0))
-                .stopAndAdd(linearLift.linearLiftToPos(-4000))
-                .stopAndAdd(crane.craneToPos(1200))
-                .waitSeconds(3)
-                .stopAndAdd(claw.openClaw())
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
                 .build();
 
         Action Middle = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(0))
-                .lineToX(20)
-                .setTangent(Math.toRadians(40))
-                .splineToConstantHeading(new Vector2d(13, -36), Math.toRadians(0))
-                .lineToXSplineHeading(38, Math.toRadians(180))
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
+                .setTangent(Math.toRadians(110))
+                .splineToConstantHeading(new Vector2d(-40, -31), Math.toRadians(60))
+                .waitSeconds(1)
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
                 .build();
 
         Action Right = drive.actionBuilder(drive.pose)
-                .setTangent(Math.toRadians(50))
-                .splineToLinearHeading(new Pose2d(13, -32, Math.toRadians(0)), Math.toRadians(90))
-                .setTangent(Math.toRadians(-90))
-                .splineToSplineHeading(new Pose2d(25,-48, Math.toRadians(90)), Math.toRadians(0))
-                .setTangent(Math.toRadians(0))
-                .splineToSplineHeading(new Pose2d(38, -40, Math.toRadians(180)), Math.toRadians(90))
-                .setTangent(Math.toRadians(45))
-                .setTangent(Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(61,-10), Math.toRadians(0))
+                .setTangent(Math.toRadians(110))
+                .splineToSplineHeading(new Pose2d(-33, -29, Math.toRadians(0)), Math.toRadians(0))
+                .waitSeconds(1)
+                .stopAndAdd(claw.openClaw())
+                .waitSeconds(1)
                 .build();
 
         waitForStart();
@@ -108,24 +88,24 @@ public class redLeft extends DriveConstance {
             }
         }
 
-            if (opModeIsActive()) {
-                if (teamElementPos == 1) {
-                    Actions.runBlocking(
-                            new SequentialAction(Left)
-                    );
-                }
+        if (opModeIsActive()) {
+            if (teamElementPos == 1) {
+                Actions.runBlocking(
+                        new SequentialAction(Left)
+                );
             }
+        }
 
-            if (teamElementPos == 2) {
-                Actions.runBlocking(
-                        new SequentialAction(Middle)
-                );
-            }
-            if (teamElementPos == 3) {
-                Actions.runBlocking(
-                        new SequentialAction(Right)
-                );
-            }
+        if (teamElementPos == 2) {
+            Actions.runBlocking(
+                    new SequentialAction(Middle)
+            );
+        }
+        if (teamElementPos == 3) {
+            Actions.runBlocking(
+                    new SequentialAction(Right)
+            );
+        }
 
     }
 }
