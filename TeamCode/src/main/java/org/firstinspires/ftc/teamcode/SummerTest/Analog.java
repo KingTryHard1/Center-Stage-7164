@@ -1,44 +1,51 @@
 package org.firstinspires.ftc.teamcode.SummerTest;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 
-import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.CRServoImplEx;
-import com.qualcomm.robotcore.hardware.LightBlinker;
 import com.qualcomm.robotcore.hardware.PwmControl;
 
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
-
-import java.util.List;
-
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class Analog extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
+
         AnalogInput AnalogServoTL = hardwareMap.get(AnalogInput.class, "Servo");
-        AnalogInput AnalogServoTR = hardwareMap.get(AnalogInput.class, "Servo");
-        AnalogInput AnalogServoBL = hardwareMap.get(AnalogInput.class, "Servo");
-        AnalogInput AnalogServoBR = hardwareMap.get(AnalogInput.class, "Servo");
-        ServoImplEx ServoTL = hardwareMap.get(ServoImplEx.class, "ServoTL");
-        ServoImplEx ServoTR = hardwareMap.get(ServoImplEx.class, "ServoTR");
-        ServoImplEx ServoBL = hardwareMap.get(ServoImplEx.class, "ServoBL");
-        ServoImplEx ServoBR = hardwareMap.get(ServoImplEx.class, "ServoBR");
+        //AnalogInput AnalogServoTR = hardwareMap.get(AnalogInput.class, "Servo");
+        //AnalogInput AnalogServoBL = hardwareMap.get(AnalogInput.class, "Servo");
+        //AnalogInput AnalogServoBR = hardwareMap.get(AnalogInput.class, "Servo");
+        CRServoImplEx ServoTL = hardwareMap.get(CRServoImplEx.class, "ServoTL");
+        //CRServoImplEx ServoTR = hardwareMap.get(CRServoImplEx.class, "ServoTR");
+        //CRServoImplEx ServoBL = hardwareMap.get(CRServoImplEx.class, "ServoBL");
+        //CRServoImplEx ServoBR = hardwareMap.get(CRServoImplEx.class, "ServoBR");
 
-        CRServoImplEx Test = hardwareMap.get(CRServoImplEx.class, "ServoBR");
+        Dictionary<String, CRServoImplEx> SwerveServos = new Hashtable<>();
 
-        ServoImplEx[] SwerveServoArray =
-                {ServoTL, ServoTR, ServoBL, ServoBR};
+        SwerveServos.put("ServoTL", ServoTL);
+        //SwerveServos.put("ServoTR", ServoTR);
+        //SwerveServos.put("ServoBL", ServoBL);
+        //SwerveServos.put("ServoBR", ServoBR);
 
-        for (int i = 0; SwerveServoArray.length >= i; i++){
-            SwerveServoArray[i].setPwmRange(new PwmControl.PwmRange(500, 2500));
+        for (int i = 0; SwerveServos.size()> i; i++){
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                SwerveServos.elements().asIterator().next().setPwmRange(new PwmControl.PwmRange(500, 2500));
+            }
+
         }
 
         waitForStart();
         while (opModeIsActive()){
+            double servoPower = gamepad1.right_stick_x;
+
+            SwerveServos.get("ServoTL").setPower(servoPower);
+            telemetry.addData("Pos: ", GetPosition(AnalogServoTL));
 
 
         }
@@ -50,5 +57,4 @@ public class Analog extends LinearOpMode {
         return position;
 
     }
-
 }
