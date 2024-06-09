@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Camera.Pipeline_Blue;
@@ -28,8 +29,8 @@ public abstract class DriveConstance extends LinearOpMode {
 
     public DcMotorEx crane;
     public DcMotorEx linearLift;
-    public Servo claw;
-    public Servo clawFlip;
+    public ServoImplEx claw;
+    public ServoImplEx clawFlip;
     public Servo planeRelease;
     public DcMotorEx lift;
 
@@ -44,8 +45,8 @@ public abstract class DriveConstance extends LinearOpMode {
 
         crane = hardwareMap.get(DcMotorEx.class, "crane");
         linearLift = hardwareMap.get(DcMotorEx.class, "linearLift");
-        claw = hardwareMap.get(Servo.class, "Claw");
-        clawFlip = hardwareMap.get(Servo.class, "clawFlip");
+        claw = hardwareMap.get(ServoImplEx.class, "Claw");
+        clawFlip = hardwareMap.get(ServoImplEx.class, "clawFlip");
 
         planeRelease = hardwareMap.get(Servo.class, "planePush");
         lift = hardwareMap.get(DcMotorEx.class, "lift");
@@ -66,6 +67,11 @@ public abstract class DriveConstance extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        linearLift.setMotorDisable();
+        claw.setPwmDisable();
+        clawFlip.setPwmDisable();
+        crane.setMotorDisable();
 
     }
 
