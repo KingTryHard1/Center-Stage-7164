@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.SummerTest;
 
-import android.os.Build;
-
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -51,9 +49,8 @@ public class Analog extends LinearOpMode {
     }
 
     public static double GetPosition(@NonNull AnalogInput Servo){
-        double position = Servo.getVoltage() / 3.3 * 360;
 
-        return position;
+        return (Servo.getVoltage() / 3.3) * 360;
 
     }
 }
